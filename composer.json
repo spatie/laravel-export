@@ -1,0 +1,58 @@
+{
+    "name": "spatie/laravel-export",
+    "description": "Create a static site bundle from a Laravel app",
+    "keywords": [
+        "spatie",
+        "laravel-export"
+    ],
+    "homepage": "https://github.com/spatie/laravel-export",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sebastian De Deyne",
+            "email": "sebastian@spatie.be",
+            "homepage": "https://spatie.be",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "guzzlehttp/guzzle": "^6.3",
+        "illuminate/console": "~5.8.0",
+        "illuminate/contracts": "~5.8.0",
+        "illuminate/support": "~5.8.0",
+        "psr/http-message": "^1.0",
+        "spatie/crawler": "^4.3"
+    },
+    "require-dev": {
+        "larapack/dd": "^1.0",
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spatie\\Export\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Spatie\\Export\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Spatie\\Export\\ExportServiceProvider"
+            ],
+            "aliases": {
+                "Export": "Spatie\\Export\\ExportFacade"
+            }
+        }
+    }
+}
