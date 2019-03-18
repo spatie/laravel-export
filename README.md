@@ -1,4 +1,4 @@
-# Create a static site bundle from a Laravel app.
+# Create a static site bundle from a Laravel app
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-export.svg?style=flat-square)](https://packagist.org/packages/spatie/:package_name)
 [![Build Status](https://img.shields.io/travis/spatie/laravel-export/master.svg?style=flat-square)](https://travis-ci.org/spatie/:package_name)
