@@ -2,13 +2,14 @@
 
 namespace Spatie\Export;
 
-use Spatie\Export\Concerns\Messenger;
 use GuzzleHttp\Psr7\Uri;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Support\Arr;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Spatie\Crawler\Crawler;
 use Spatie\Crawler\CrawlInternalUrls;
+use Spatie\Export\Concerns\Messenger;
 
 class Exporter
 {
@@ -17,54 +18,119 @@ class Exporter
     /** @var \Illuminate\Contracts\Filesystem\Filesystem */
     protected $filesystem;
 
-    /** @var \GuzzleHttp\Psr7\Uri */
-    protected $baseUrl;
+    /** @var \GuzzleHttp\Psr7\Uri[] */
+    protected $entries;
 
-    /** @var \Spatie\Export\ExportCrawlObserver */
-    protected $crawlObserver;
+    /** @var string[] */
+    protected $include;
 
-    public function __construct(Filesystem $filesystem, string $baseUrl)
+    /** @var string[] */
+    protected $exclude;
+
+    public function __construct(Filesystem $filesystem)
     {
         $this->filesystem = $filesystem;
+    }
 
-        $this->baseUrl = new Uri($baseUrl);
+    public function entries(array $entries): Exporter
+    {
+        $this->entries = array_map(function (string $entry) {
+            return new Uri($entry);
+        }, $entries);
 
-        $this->crawlObserver = new ExportCrawlObserver($filesystem, $this->baseUrl);
+        return $this;
+    }
+
+    public function include(array $include): Exporter
+    {
+        $this->include = array_map(function ($include) {
+            return is_array($include)
+                ? $include
+                : ['source' => $include, 'target' => $include];
+        }, $include);
+
+        return $this;
+    }
+
+    public function exclude(array $exclude): Exporter
+    {
+        $this->exclude = $exclude;
+
+        return $this;
     }
 
     public function export(): void
     {
-        Crawler::create()
-            ->setCrawlProfile(new CrawlInternalUrls($this->baseUrl))
-            ->setCrawlObserver($this->crawlObserver)
-            ->startCrawling($this->baseUrl);
+        $this->exportEntries();
 
-        $this->exportAssets();
+        $this->exportIncludedFiles();
     }
 
-    public function onMessage(callable $onMessage): void
+    protected function exportEntries(): void
     {
-        $this->onMessage = $onMessage;
+        foreach ($this->entries as $entry) {
+            $this->message("[{$entry}]");
 
-        $this->crawlObserver->onMessage($onMessage);
+            $crawlObserver = new ExportCrawlObserver($this->filesystem, $entry);
+            $crawlObserver->onMessage($this->onMessage);
+
+            Crawler::create()
+                ->setCrawlProfile(new CrawlInternalUrls($entry))
+                ->setCrawlObserver($crawlObserver)
+                ->startCrawling($entry);
+        }
     }
 
-    protected function exportAssets()
+    protected function exportIncludedFiles(): void
     {
-        $this->message("Exporting public directory");
+        foreach ($this->include as ["source" => $source, "target" => $target]) {
+            $this->message("[{$source}]");
 
+            if (is_file($source)) {
+                $this->exportIncludedFile($source, $target);
+            } else {
+                $this->exportIncludedDirectory($source, $target);
+            }
+        }
+    }
+
+    protected function exportIncludedFile(string $source, string $target): void
+    {
+        if ($this->excludes($source)) {
+            return;
+        }
+
+        $target = "/" . ltrim($target, "/");
+
+        $this->message($target);
+
+        $this->filesystem->put($target, file_get_contents($source));
+    }
+
+    protected function exportIncludedDirectory(string $source, string $target): void
+    {
         $iterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator(public_path(), RecursiveDirectoryIterator::SKIP_DOTS),
+            new RecursiveDirectoryIterator($source, RecursiveDirectoryIterator::SKIP_DOTS),
             RecursiveIteratorIterator::SELF_FIRST
         );
 
         foreach ($iterator as $item) {
-            if (!$item->isDir() && $item->getExtension() !== "php") {
-                $this->filesystem->put(
-                    $iterator->getSubPathName(),
-                    file_get_contents($item->getPathname())
-                );
-             }
+            if ($item->isDir()) {
+                continue;
+            }
+
+            $this->exportIncludedFile($item->getPathname(), $target . '/' . $iterator->getSubPathName());
         }
+    }
+
+    protected function excludes(string $source): bool
+    {
+        foreach ($this->exclude as $pattern) {
+            if (preg_match('/' . str_replace('/', '\/', $pattern) . '/', $source)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

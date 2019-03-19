@@ -22,7 +22,8 @@
         "illuminate/contracts": "~5.8.0",
         "illuminate/support": "~5.8.0",
         "psr/http-message": "^1.0",
-        "spatie/crawler": "^4.3"
+        "spatie/crawler": "^4.3",
+        "symfony/process": "^4.2"
     },
     "require-dev": {
         "larapack/dd": "^1.0",
@@ -49,10 +50,7 @@
         "laravel": {
             "providers": [
                 "Spatie\\Export\\ExportServiceProvider"
-            ],
-            "aliases": {
-                "Export": "Spatie\\Export\\ExportFacade"
-            }
+            ]
         }
     }
 }

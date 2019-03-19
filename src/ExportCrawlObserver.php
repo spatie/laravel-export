@@ -31,24 +31,18 @@ class ExportCrawlObserver extends CrawlObserver
         $this->assets = [];
     }
 
-    public function crawled(
-        UriInterface $url,
-        ResponseInterface $response,
-        ?UriInterface $foundOnUrl = null
-    ) {
-        $this->message("Exporting {$url}");
+    public function crawled(UriInterface $url, ResponseInterface $response, ?UriInterface $foundOnUrl = null) {
+        $targetPath = '/' . ltrim($url->getPath() . '/index.html', '/');
 
-        $this->filesystem->put(
-            $url->getPath() . '/index.html',
-            str_replace($this->baseUrl . '/', '/', $response->getBody())
-        );
+        $this->message($targetPath);
+
+        $contents = str_replace($this->baseUrl . '/', '/', $response->getBody());
+        $contents = str_replace($this->baseUrl, '/', $contents);
+
+        $this->filesystem->put($targetPath, $contents);
     }
 
-    public function crawlFailed(
-        UriInterface $url,
-        RequestException $requestException,
-        ?UriInterface $foundOnUrl = null
-    ) {
+    public function crawlFailed(UriInterface $url, RequestException $requestException, ?UriInterface $foundOnUrl = null) {
         throw $requestException;
     }
 }
