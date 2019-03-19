@@ -24,9 +24,18 @@ class ExportCommand extends Command
 
         $this->info("Starting export...");
 
+        $start = microtime(true);
+
         $exporter->export();
 
-        $this->info('Files were saved to disk `' . config('export.disk') . '`');
+        $end = microtime(true);
+
+        $duration = round($end - $start);
+
+        $this->info(
+            'Files were saved to disk `' . config('export.disk') . '`.'
+            . " Done in {$duration} seconds"
+        );
 
         if (! $this->input->getOption('skip-after')) {
             $this->runAfterHooks();
