@@ -18,9 +18,9 @@
     "require": {
         "php": "^7.1",
         "guzzlehttp/guzzle": "^6.3",
-        "illuminate/console": "~5.8.0",
-        "illuminate/contracts": "~5.8.0",
-        "illuminate/support": "~5.8.0",
+        "illuminate/console": "~5.7.0|~5.8.0",
+        "illuminate/contracts": "~5.7.0|~5.8.0",
+        "illuminate/support": "~5.7.0|~5.8.0",
         "psr/http-message": "^1.0",
         "spatie/crawler": "^4.3",
         "symfony/process": "^4.2"

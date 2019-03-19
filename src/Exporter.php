@@ -2,9 +2,7 @@
 
 namespace Spatie\Export;
 
-use GuzzleHttp\Psr7\Uri;
 use Illuminate\Contracts\Filesystem\Filesystem;
-use Illuminate\Support\Arr;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Spatie\Crawler\Crawler;
@@ -18,7 +16,7 @@ class Exporter
     /** @var \Illuminate\Contracts\Filesystem\Filesystem */
     protected $filesystem;
 
-    /** @var \GuzzleHttp\Psr7\Uri[] */
+    /** @var string[] */
     protected $entries;
 
     /** @var string[] */
@@ -34,9 +32,7 @@ class Exporter
 
     public function entries(array $entries): Exporter
     {
-        $this->entries = array_map(function (string $entry) {
-            return new Uri($entry);
-        }, $entries);
+        $this->entries = $entries;
 
         return $this;
     }

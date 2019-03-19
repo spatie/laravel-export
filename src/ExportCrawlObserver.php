@@ -16,17 +16,17 @@ class ExportCrawlObserver extends CrawlObserver
     /** @var \Illuminate\Contracts\Filesystem\Filesystem */
     protected $filesystem;
 
-    /** @var \Psr\Http\Message\UriInterface */
-    protected $baseUrl;
+    /** @var string */
+    protected $entry;
 
     /** @var string[] */
     protected $assets;
 
-    public function __construct(Filesystem $filesystem, UriInterface $baseUrl)
+    public function __construct(Filesystem $filesystem, string $entry)
     {
         $this->filesystem = $filesystem;
 
-        $this->baseUrl = $baseUrl;
+        $this->entry = $entry;
 
         $this->assets = [];
     }
@@ -36,8 +36,8 @@ class ExportCrawlObserver extends CrawlObserver
 
         $this->message($targetPath);
 
-        $contents = str_replace($this->baseUrl . '/', '/', $response->getBody());
-        $contents = str_replace($this->baseUrl, '/', $contents);
+        $contents = str_replace($this->entry . '/', '/', $response->getBody());
+        $contents = str_replace($this->entry, '/', $contents);
 
         $this->filesystem->put($targetPath, $contents);
     }
