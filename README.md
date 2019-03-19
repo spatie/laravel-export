@@ -5,8 +5,6 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/spatie/laravel-export.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/:package_name)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-export.svg?style=flat-square)](https://packagist.org/packages/spatie/:package_name)
 
-![Laravel Export in action](https://user-images.githubusercontent.com/1561079/54561891-0f445700-49c6-11e9-8ef4-380d389abf30.gif)
-
 Laravel Export will scan your app and create an HTML page from every URL it crawls. The entire `public` directory als gets added to the bundle so your assets are in place too.
 
 ## Installation
