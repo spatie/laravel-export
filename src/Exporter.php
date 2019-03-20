@@ -25,9 +25,13 @@ class Exporter
     /** @var string[] */
     protected $exclude;
 
+    /** @var \Spatie\Crawler\Crawler */
+    protected $crawler;
+
     public function __construct(Filesystem $filesystem)
     {
         $this->filesystem = $filesystem;
+        $this->crawler = (new Crawler(new InternalClient()));
     }
 
     public function entries(array $entries): Exporter
@@ -70,9 +74,9 @@ class Exporter
             $crawlObserver = new ExportCrawlObserver($this->filesystem, $entry);
             $crawlObserver->onMessage($this->onMessage);
 
-            Crawler::create()
-                ->setCrawlProfile(new CrawlInternalUrls($entry))
+            $this->crawler
                 ->setCrawlObserver($crawlObserver)
+                ->setCrawlProfile(new CrawlInternalUrls($entry))
                 ->startCrawling($entry);
         }
     }
