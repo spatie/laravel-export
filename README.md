@@ -40,56 +40,56 @@ php artisan vendor:publish ...
 Laravel Export doesn't require configuration to get started, but there are a few things you can tweak to your needs.
 
 <details>
-<summary>Here's what the default config file looks like:</summary>
-```php
-return [
+    <summary>Here's what the default config file looks like:</summary>
+    <pre><code>
+    return [
 
-    /*
-     * If set, the site will be exported to this disk. Disks can be configured
-     * in `config/filesystems.php`.
-     *
-     * If empty, your site will be exported to a `dist` folder.
-     */
-    'disk' => null,
+        /*
+        * If set, the site will be exported to this disk. Disks can be configured
+        * in `config/filesystems.php`.
+        *
+        * If empty, your site will be exported to a `dist` folder.
+        */
+        'disk' => null,
 
-    /*
-     * The entry points of your app. The export crawler will start to build
-     * pages from these URL's.
-     */
-    'entries' => [
-        env('APP_URL'),
-    ],
+        /*
+        * The entry points of your app. The export crawler will start to build
+        * pages from these URL's.
+        */
+        'entries' => [
+            env('APP_URL'),
+        ],
 
-    /*
-     * Files that should be included in the build.
-     */
-    'include' => [
-        ['source' => 'public', 'target' => ''],
-    ],
+        /*
+        * Files that should be included in the build.
+        */
+        'include' => [
+            ['source' => 'public', 'target' => ''],
+        ],
 
-    /*
-     * Patterns that should be excluded from the build.
-     */
-    'exclude' => [
-        '/\.php$/',
-    ],
+        /*
+        * Patterns that should be excluded from the build.
+        */
+        'exclude' => [
+            '/\.php$/',
+        ],
 
-    /*
-     * Shell commands that should be run before the export will be created.
-     */
-    'before' => [
-        // '/usr/local/bin/yarn production',
-    ],
+        /*
+        * Shell commands that should be run before the export will be created.
+        */
+        'before' => [
+            // '/usr/local/bin/yarn production',
+        ],
 
-    /*
-     * Shell commands that should be run after the export was created.
-     */
-    'after' => [
-        // '/usr/local/bin/netlify deploy --prod',
-    ],
+        /*
+        * Shell commands that should be run after the export was created.
+        */
+        'after' => [
+            // '/usr/local/bin/netlify deploy --prod',
+        ],
 
-];
-```
+    ];
+    </code></pre>
 </details>
 
 ### Custom disks
