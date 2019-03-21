@@ -2,8 +2,8 @@
 
 namespace Spatie\Export\Console;
 
-use Illuminate\Console\Command;
 use Spatie\Export\Exporter;
+use Illuminate\Console\Command;
 use Symfony\Component\Process\Process;
 
 class ExportCommand extends Command
@@ -22,7 +22,7 @@ class ExportCommand extends Command
             $this->runBeforeHooks();
         }
 
-        $this->info("Starting export...");
+        $this->info('Starting export...');
 
         $start = microtime(true);
 
@@ -33,8 +33,8 @@ class ExportCommand extends Command
         $duration = round($end - $start);
 
         $this->info(
-            'Files were saved to disk `' . config('export.disk') . '`.'
-            . " Done in {$duration} seconds"
+            'Files were saved to disk `'.config('export.disk').'`.'
+            ." Done in {$duration} seconds"
         );
 
         if (! $this->input->getOption('skip-after')) {
@@ -50,7 +50,7 @@ class ExportCommand extends Command
             return;
         }
 
-        $this->info("Running before hooks...");
+        $this->info('Running before hooks...');
 
         $this->runHooks($beforeHooks);
     }
@@ -63,7 +63,7 @@ class ExportCommand extends Command
             return;
         }
 
-        $this->info("Running after hooks...");
+        $this->info('Running after hooks...');
 
         $this->runHooks($afterHooks);
     }

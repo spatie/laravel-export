@@ -2,12 +2,12 @@
 
 namespace Spatie\Export;
 
+use Spatie\Crawler\CrawlObserver;
+use Psr\Http\Message\UriInterface;
 use Spatie\Export\Concerns\Messenger;
+use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Contracts\Filesystem\Filesystem;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\UriInterface;
-use Spatie\Crawler\CrawlObserver;
 
 class ExportCrawlObserver extends CrawlObserver
 {
@@ -31,18 +31,20 @@ class ExportCrawlObserver extends CrawlObserver
         $this->assets = [];
     }
 
-    public function crawled(UriInterface $url, ResponseInterface $response, ?UriInterface $foundOnUrl = null) {
-        $targetPath = '/' . ltrim($url->getPath() . '/index.html', '/');
+    public function crawled(UriInterface $url, ResponseInterface $response, ?UriInterface $foundOnUrl = null)
+    {
+        $targetPath = '/'.ltrim($url->getPath().'/index.html', '/');
 
         $this->message($targetPath);
 
-        $contents = str_replace($this->entry . '/', '/', $response->getBody());
+        $contents = str_replace($this->entry.'/', '/', $response->getBody());
         $contents = str_replace($this->entry, '/', $contents);
 
         $this->filesystem->put($targetPath, $contents);
     }
 
-    public function crawlFailed(UriInterface $url, RequestException $requestException, ?UriInterface $foundOnUrl = null) {
+    public function crawlFailed(UriInterface $url, RequestException $requestException, ?UriInterface $foundOnUrl = null)
+    {
         throw $requestException;
     }
 }

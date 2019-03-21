@@ -2,12 +2,12 @@
 
 namespace Spatie\Export;
 
-use Illuminate\Contracts\Filesystem\Filesystem;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
 use Spatie\Crawler\Crawler;
+use RecursiveIteratorIterator;
+use RecursiveDirectoryIterator;
 use Spatie\Crawler\CrawlInternalUrls;
 use Spatie\Export\Concerns\Messenger;
+use Illuminate\Contracts\Filesystem\Filesystem;
 
 class Exporter
 {
@@ -83,7 +83,7 @@ class Exporter
 
     protected function exportIncludedFiles(): void
     {
-        foreach ($this->include as ["source" => $source, "target" => $target]) {
+        foreach ($this->include as ['source' => $source, 'target' => $target]) {
             $this->message("[{$source}]");
 
             if (is_file($source)) {
@@ -100,7 +100,7 @@ class Exporter
             return;
         }
 
-        $target = "/" . ltrim($target, "/");
+        $target = '/'.ltrim($target, '/');
 
         $this->message($target);
 
@@ -119,7 +119,7 @@ class Exporter
                 continue;
             }
 
-            $this->exportIncludedFile($item->getPathname(), $target . '/' . $iterator->getSubPathName());
+            $this->exportIncludedFile($item->getPathname(), $target.'/'.$iterator->getSubPathName());
         }
     }
 
