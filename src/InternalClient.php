@@ -3,14 +3,13 @@
 namespace Spatie\Export;
 
 use GuzzleHttp\Client;
+use Nyholm\Psr7\Factory\Psr17Factory;
+use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Promise\FulfilledPromise;
 use Illuminate\Http\Request as LaravelRequest;
-use Nyholm\Psr7\Factory\Psr17Factory;
+use Illuminate\Contracts\Http\Kernel as HttpKernel;
 use Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
-use Psr\Http\Message\RequestInterface;
-use Illuminate\Contracts\Http\Kernel as HttpKernel;
-use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
 
 class InternalClient extends Client
 {

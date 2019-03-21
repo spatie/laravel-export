@@ -2,9 +2,9 @@
 
 namespace Spatie\Export;
 
-use Spatie\Export\Console\ExportCommand;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
+use Spatie\Export\Console\ExportCommand;
 
 class ExportServiceProvider extends ServiceProvider
 {
