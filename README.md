@@ -14,7 +14,7 @@ Files were saved to disk `export`
 
 Build your blog or site with Laravel like with the tools you're used to having and export it to be hosted statically.
 
-Laravel Export will scan your app and create an HTML page from every URL it crawls. The entire `public` directory als gets added to the bundle so your assets are in place too.
+Laravel Export will scan your app and create an HTML page from every URL it crawls. The entire `public` directory also gets added to the bundle so your assets are in place too.
 
 A few example use cases for this package:
 
