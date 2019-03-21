@@ -15,7 +15,7 @@ return [
      * pages from these URL's.
      */
     'entries' => [
-        env('APP_URL'),
+        '/',
     ],
 
     /*
