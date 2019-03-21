@@ -3,10 +3,12 @@
 return [
 
     /*
-     * Files will be saved to this disk. Disks can be configured in
-     * `config/filesystems.php`.
+     * If set, the site will be exported to this disk. Disks can be configured
+     * in `config/filesystems.php`.
+     *
+     * If empty, your site will be exported to a `dist` folder.
      */
-    'disk' => 'export',
+    'disk' => null,
 
     /*
      * The entry points of your app. The export crawler will start to build
@@ -24,10 +26,10 @@ return [
     ],
 
     /*
-     * Files that should be excluded from the build.
+     * Patterns that should be excluded from the build.
      */
     'exclude' => [
-        '.php$',
+        '/\.php$/',
     ],
 
     /*
