@@ -126,7 +126,7 @@ class Exporter
     protected function excludes(string $source): bool
     {
         foreach ($this->exclude as $pattern) {
-            if (preg_match('/' . str_replace('/', '\/', $pattern) . '/', $source)) {
+            if (preg_match($pattern, $source)) {
                 return true;
             }
         }
