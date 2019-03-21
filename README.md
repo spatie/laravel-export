@@ -1,9 +1,11 @@
 # Create a static site bundle from a Laravel app
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-export.svg?style=flat-square)](https://packagist.org/packages/spatie/:package_name)
-[![Build Status](https://img.shields.io/travis/spatie/laravel-export/master.svg?style=flat-square)](https://travis-ci.org/spatie/:package_name)
-[![Quality Score](https://img.shields.io/scrutinizer/g/spatie/laravel-export.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/:package_name)
-[![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-export.svg?style=flat-square)](https://packagist.org/packages/spatie/:package_name)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-export.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-export)
+
+[![Build Status](https://img.shields.io/travis/spatie/laravel-export/master.svg?style=flat-square)](https://travis-ci.org/spatie/laravel-export)
+[![StyleCI](https://github.styleci.io/repos/176365605/shield?branch=master)](https://github.styleci.io/repos/176365605)
+[![Quality Score](https://img.shields.io/scrutinizer/g/spatie/laravel-export.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/laravel-export)
+[![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-export.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-export)
 
 ```
 $ php artisan export
