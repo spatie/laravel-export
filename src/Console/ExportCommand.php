@@ -24,24 +24,13 @@ class ExportCommand extends Command
 
         $this->info('Starting export...');
 
-        $start = microtime(true);
-
         $exporter->export();
 
-        $end = microtime(true);
-
-        $duration = round($end - $start);
-
         if (config('export.disk')) {
-            $success_message = 'Files were saved to disk `'.config('export.disk').'`.';
+            $this->info('Files were saved to disk `'.config('export.disk').'`');
         } else {
-            $success_message = 'Files were saved into `'.base_path('dist').'`.';
+            $this->info('Files were saved to `dist`');
         }
-
-        $this->info(
-            $success_message
-            ." Done in {$duration} seconds"
-        );
 
         if (! $this->input->getOption('skip-after')) {
             $this->runAfterHooks();
