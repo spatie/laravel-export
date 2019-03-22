@@ -13,7 +13,7 @@ class ExportServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/export.php', 'export');
 
         $this->app->singleton(Exporter::class, function () {
-            return (new Exporter(Storage::disk('export')))
+            return (new Exporter(Storage::disk(config('export.disk'))))
                 ->entries(config('export.entries', []))
                 ->include(config('export.include', []))
                 ->exclude(config('export.exclude', []));
