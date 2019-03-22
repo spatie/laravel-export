@@ -20,7 +20,7 @@ class ExportServiceProvider extends ServiceProvider
                     'filesystems.disks.spatie_export' => [
                         'driver' => 'local',
                         'root' => base_path('dist'),
-                    ]
+                    ],
                 ]);
                 $storage_disk = Storage::disk('spatie_export');
             }
