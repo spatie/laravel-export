@@ -13,7 +13,19 @@ class ExportServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/export.php', 'export');
 
         $this->app->singleton(Exporter::class, function () {
-            return (new Exporter(Storage::disk(config('export.disk'))))
+            if (config('export.disk')) {
+                $storage_disk = Storage::disk(config('export.disk'));
+            } else {
+                config([
+                    'filesystems.disks.spatie_export' => [
+                        'driver' => 'local',
+                        'root' => base_path('dist'),
+                    ]
+                ]);
+                $storage_disk = Storage::disk('spatie_export');
+            }
+
+            return (new Exporter($storage_disk))
                 ->entries(config('export.entries', []))
                 ->include(config('export.include', []))
                 ->exclude(config('export.exclude', []));
