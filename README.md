@@ -94,8 +94,6 @@ return [
 
 ### Custom disks
 
-> 🚨 **Warning!** Right now, you MUST specify your own disk in the config, the default `dist` folder behaviour isn't supported yet.
-
 By default, Laravel Export will save the static bundle in a `dist` folder in your application root. If you want to store the site in a different folder, [configure a new disk](https://laravel.com/docs/5.8/filesystem) in `config/filesystem.php`.
 
 ```php
