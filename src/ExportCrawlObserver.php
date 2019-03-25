@@ -33,7 +33,8 @@ class ExportCrawlObserver extends CrawlObserver
 
     public function crawled(UriInterface $url, ResponseInterface $response, ?UriInterface $foundOnUrl = null)
     {
-        $targetPath = '/'.ltrim($url->getPath().'/index.html', '/');
+
+        $targetPath = (isset(explode('.', $url->getPath())[1])) ? '/'.ltrim($url->getPath(), '/') : '/'.ltrim($url->getPath().'/index.html', '/');
 
         $this->message($targetPath);
 
