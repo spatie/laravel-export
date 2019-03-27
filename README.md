@@ -58,7 +58,7 @@ return [
     * pages from these URL's.
     */
     'entries' => [
-        env('APP_URL'),
+        '/',
     ],
 
     /*
@@ -130,8 +130,8 @@ Determining what will be exported happens through three configurable values: `en
 ```php
 return [
     'entries' => [
-        env('APP_URL'),
-        env('APP_URL') . '/rss.xml',
+        '/',
+        '/rss.xml',
     ],
 ];
 ```
