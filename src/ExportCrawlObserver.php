@@ -39,7 +39,7 @@ class ExportCrawlObserver extends CrawlObserver
             ? '/'.ltrim($url->getPath(), '/')
             : '/'.ltrim($url->getPath().'/index.html', '/');
 
-        $this->message($targetPath);
+        $this->message(str_replace("http://localhost", '', $url) . " => {$targetPath}");
 
         $contents = str_replace($this->entry.'/', '/', $response->getBody());
         $contents = str_replace($this->entry, '/', $contents);
