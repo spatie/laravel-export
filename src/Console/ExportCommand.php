@@ -5,12 +5,33 @@ namespace Spatie\Export\Console;
 use Spatie\Export\Exporter;
 use Illuminate\Console\Command;
 use Symfony\Component\Process\Process;
+use Symfony\Component\Console\Input\InputOption;
 
 class ExportCommand extends Command
 {
-    protected $signature = 'export {--skip-before} {--skip-after}';
+    protected $name = 'export';
 
     protected $description = 'Export the entire app to a static site';
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        collect()
+            ->merge(config('export.before', []))
+            ->merge(config('export.after', []))
+            ->keys()
+            ->unique()
+            ->sort()
+            ->each(function (string $name) {
+                $this->addOption(
+                    "skip-{$name}",
+                    null,
+                    InputOption::VALUE_NONE,
+                    "Skip the {$name} hook"
+                );
+            });
+    }
 
     public function handle(Exporter $exporter)
     {
@@ -18,9 +39,7 @@ class ExportCommand extends Command
             $this->comment($message, 'v');
         });
 
-        if (! $this->input->getOption('skip-before')) {
-            $this->runBeforeHooks();
-        }
+        $this->runBeforeHooks();
 
         $this->info('Starting export...');
 
@@ -32,14 +51,15 @@ class ExportCommand extends Command
             $this->info('Files were saved to `dist`');
         }
 
-        if (! $this->input->getOption('skip-after')) {
-            $this->runAfterHooks();
-        }
+        $this->runAfterHooks();
     }
 
     protected function runBeforeHooks()
     {
-        $beforeHooks = config('export.before');
+        $beforeHooks = collect(config('export.before', []))
+            ->reject(function (string $hook, string $name) {
+                return $this->input->getOption("skip-{$name}");
+            });
 
         if (! count($beforeHooks)) {
             return;
@@ -52,7 +72,10 @@ class ExportCommand extends Command
 
     protected function runAfterHooks()
     {
-        $afterHooks = config('export.after');
+        $afterHooks = collect(config('export.after', []))
+            ->reject(function (string $hook, string $name) {
+                return $this->input->getOption("skip-{$name}");
+            });
 
         if (! count($afterHooks)) {
             return;
@@ -65,8 +88,8 @@ class ExportCommand extends Command
 
     protected function runHooks(array $hooks)
     {
-        foreach ($hooks as $command) {
-            $this->comment("[{$command}]", 'v');
+        foreach ($hooks as $name => $command) {
+            $this->comment("[{$name}]", 'v');
 
             $process = new Process($command);
 

@@ -36,14 +36,14 @@ return [
      * Shell commands that should be run before the export will be created.
      */
     'before' => [
-        // '/usr/local/bin/yarn production',
+        // 'assets' => '/usr/local/bin/yarn production',
     ],
 
     /*
      * Shell commands that should be run after the export was created.
      */
     'after' => [
-        // '/usr/local/bin/netlify deploy --prod',
+        // 'deploy' => '/usr/local/bin/netlify deploy --prod',
     ],
 
 ];

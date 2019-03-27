@@ -79,14 +79,14 @@ return [
     * Shell commands that should be run before the export will be created.
     */
     'before' => [
-        // '/usr/local/bin/yarn production',
+        // 'assets' => '/usr/local/bin/yarn production',
     ],
 
     /*
     * Shell commands that should be run after the export was created.
     */
     'after' => [
-        // '/usr/local/bin/netlify deploy --prod',
+        // 'deploy' => '/usr/local/bin/netlify deploy --prod',
     ],
 
 ];
@@ -167,7 +167,7 @@ With this `before` hook, we'll use Yarn to build our assets before every export:
 ```php
 return [
     'before' => [
-        '/usr/local/bin/yarn production',
+        'assets' => '/usr/local/bin/yarn production',
     ],
 ];
 ```
@@ -177,15 +177,15 @@ With this `after` hook, we'll deploy the static bundle to Netlify with their [CL
 ```php
 return [
     'after' => [
-        '/usr/local/bin/netlify deploy --prod',
+        'deploy' => '/usr/local/bin/netlify deploy --prod',
     ],
 ];
 ```
 
-If you want to run an export without hooks, use the `--skip-before` and/or `--skip-after flags`.
+If you want to run an export without certain hooks, use `--skip-{hook}` flags.
 
 ```bash
-php artisan export --skip-before --skip-after
+php artisan export --skip-deploy
 ```
 
 ## Usage
