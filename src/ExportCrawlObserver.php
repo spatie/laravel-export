@@ -33,7 +33,7 @@ class ExportCrawlObserver extends CrawlObserver
 
     public function crawled(UriInterface $url, ResponseInterface $response, ?UriInterface $foundOnUrl = null)
     {
-        $isFile = isset(explode('.', $url->getPath())[1]);
+        $isFile = ! preg_match('/^((.+\.[\d]+[^\w]*)|((?:(?!\.).)*|))$/', $url->getPath());
 
         $targetPath = $isFile
             ? '/'.ltrim($url->getPath(), '/')
