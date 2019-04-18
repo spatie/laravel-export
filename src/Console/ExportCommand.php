@@ -4,6 +4,7 @@ namespace Spatie\Export\Console;
 
 use Spatie\Export\Exporter;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -86,7 +87,7 @@ class ExportCommand extends Command
         $this->runHooks($afterHooks);
     }
 
-    protected function runHooks(array $hooks)
+    protected function runHooks(Collection $hooks)
     {
         foreach ($hooks as $name => $command) {
             $this->comment("[{$name}]", 'v');
