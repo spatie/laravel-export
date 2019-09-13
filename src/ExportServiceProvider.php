@@ -2,10 +2,10 @@
 
 namespace Spatie\Export;
 
-use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Export\Console\ExportCommand;
+use Illuminate\Contracts\Filesystem\Filesystem;
 
 class ExportServiceProvider extends ServiceProvider
 {
