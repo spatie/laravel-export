@@ -34,6 +34,14 @@ class Exporter
         $this->crawler = (new Crawler(new InternalClient()));
     }
 
+    /**
+     * @return Filesystem
+     */
+    public function getFilesystem(): Filesystem
+    {
+        return $this->filesystem;
+    }
+
     public function entries(array $entries): Exporter
     {
         $this->entries = array_map(function (string $entry) {

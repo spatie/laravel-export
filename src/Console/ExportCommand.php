@@ -2,9 +2,13 @@
 
 namespace Spatie\Export\Console;
 
+use Illuminate\Support\Facades\Storage;
+use Spatie\Crawler\Crawler;
 use Spatie\Export\Exporter;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Spatie\Export\InternalClient;
+use Spatie\Sitemap\SitemapGenerator;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -45,6 +49,28 @@ class ExportCommand extends Command
         $this->info('Starting export...');
 
         $exporter->export();
+
+        if (config('export.sitemap.enabled')) {
+            SitemapGenerator::create('https://memories2digital.com.au')
+                ->configureCrawler(function (Crawler $crawler) {
+                    // TODO pr to the crawler repo to let us customise the client :P
+                    $reflection = new \ReflectionClass($crawler);
+                    $property = $reflection->getProperty('client');
+                    $property->setAccessible(true);
+                    $property->setValue($crawler, new InternalClient());
+
+                    return $crawler;
+
+                })
+                ->writeToFile(Storage::disk('local')->path('export_temp/' . config('export.sitemap.filename')));
+
+            // Copy all of the sitemaps to the correct disk
+            foreach (Storage::disk('local')->files('export_temp') as $filename) {
+                $exporter->getFilesystem()->put(basename($filename), Storage::disk('local')->get($filename));
+            }
+
+            Storage::disk('local')->delete('export_temp');
+        }
 
         if (config('export.disk')) {
             $this->info('Files were saved to disk `'.config('export.disk').'`');

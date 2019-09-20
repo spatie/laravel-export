@@ -19,6 +19,16 @@ return [
     ],
 
     /*
+     * The exporter can optionally build a sitemap. You'll need to specify
+     * the URL (protocol & domain) to be used.
+     */
+    'sitemap' => [
+        'enabled' => env('EXPORT_SITEMAP_ENABLED', false),
+        'domain' => env('EXPORT_SITEMAP_DOMAIN', 'http://localhost'),
+        'filename' => env('EXPORT_SITEMAP_FILENAME', 'sitemap.xml'),
+    ],
+
+    /*
      * Files that should be included in the build.
      */
     'include' => [
