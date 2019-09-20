@@ -37,7 +37,7 @@ class Exporter
     public function entries(array $entries): Exporter
     {
         $this->entries = array_map(function (string $entry) {
-            return "http://localhost{$entry}";
+            return url($entry);
         }, $entries);
 
         return $this;
