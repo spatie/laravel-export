@@ -2,30 +2,29 @@
 
 namespace Spatie\Export\Crawler;
 
-use GuzzleHttp\Exception\RequestException;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\UriInterface;
-use Spatie\Crawler\CrawlObserver;
 use Spatie\Export\Destination;
+use Spatie\Crawler\CrawlObserver;
+use Psr\Http\Message\UriInterface;
+use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Exception\RequestException;
 
 class Observer extends CrawlObserver
 {
-    /** @var \Spatie\Export\Destination */
-    protected $destination;
-
     /** @var string */
     protected $entry;
 
-    public function __construct(Destination $destination, string $entry)
-    {
-        $this->destination = $destination;
+    /** @var \Spatie\Export\Destination */
+    protected $destination;
 
+    public function __construct(string $entry, Destination $destination)
+    {
         $this->entry = $entry;
+        $this->destination = $destination;
     }
 
     public function crawled(UriInterface $url, ResponseInterface $response, ?UriInterface $foundOnUrl = null)
     {
-        $contents = str_replace($this->entry.'/', '/', $response->getBody());
+        $contents = str_replace($this->entry.'/', '/', (string) $response->getBody());
         $contents = str_replace($this->entry, '/', $contents);
 
         $this->destination->write(

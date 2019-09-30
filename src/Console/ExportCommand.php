@@ -38,15 +38,9 @@ class ExportCommand extends Command
     {
         $this->runBeforeHooks();
 
-        $this->info('Starting export...');
-
-        $progressBar = $this->output->createProgressBar();
-
-        $progressBar->start();
+        $this->info('Exporting site...');
 
         $exporter->export();
-
-        $progressBar->finish();
 
         if (config('export.disk')) {
             $this->info('Files were saved to disk `'.config('export.disk').'`');

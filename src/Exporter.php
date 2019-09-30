@@ -2,10 +2,10 @@
 
 namespace Spatie\Export;
 
-use Spatie\Export\Jobs\CrawlSite;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Spatie\Export\Jobs\CleanDestination;
-use Spatie\Export\Jobs\cleanBeforeExportDestination;
+use Spatie\Export\Jobs\CrawlSite;
+use Spatie\Export\Jobs\IncludeFiles;
 
 class Exporter
 {
@@ -80,11 +80,21 @@ class Exporter
     public function export()
     {
         if ($this->cleanBeforeExport) {
-            $this->dispatcher->dispatchNow(new CleanDestination());
+            $this->dispatcher->dispatchNow(
+                new CleanDestination()
+            );
         }
 
         if ($this->crawl) {
-            $this->dispatcher->dispatchNow(new CrawlSite());
+            $this->dispatcher->dispatchNow(
+                new CrawlSite()
+            );
+        }
+
+        if (count($this->includeFiles)) {
+            $this->dispatcher->dispatchNow(
+                new IncludeFiles($this->includeFiles, $this->excludeFilePatterns)
+            );
         }
     }
 }

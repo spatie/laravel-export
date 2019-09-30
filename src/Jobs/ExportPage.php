@@ -19,7 +19,7 @@ class ExportPage
     {
         $destination->write(
             $this->path,
-            (new LocalClient())->get($this->path)->getBody()
+            (string) (new LocalClient())->get($this->path)->getBody()
         );
     }
 }
