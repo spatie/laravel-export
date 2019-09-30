@@ -43,16 +43,6 @@ return [
     ],
 
     /*
-     * Rewrite URLs while exporting, particularly useful to get rid of query
-     * string.
-     *
-     * By default, we'll generate pretty URLs for paginated content.
-     */
-    'rewrite_rules' => [
-        '/\?page=([0-9]+)/' => 'page/$1',
-    ],
-
-    /*
      * Whether or not the destination folder should be emptied before starting
      * the export.
      */

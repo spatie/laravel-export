@@ -25,8 +25,7 @@ class ExportServiceProvider extends ServiceProvider
                 ->crawl(config('export.crawl', false))
                 ->paths(config('export.paths', []))
                 ->includeFiles(config('export.include_files', []))
-                ->excludeFilePatterns(config('export.exclude_file_patterns', []))
-                ->rewriteRules(config('export.rewrite_rules', []));
+                ->excludeFilePatterns(config('export.exclude_file_patterns', []));
         });
 
         $this->commands([

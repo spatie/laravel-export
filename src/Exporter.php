@@ -22,9 +22,6 @@ class Exporter
     protected $paths = [];
 
     /** @var string[] */
-    protected $rewriteRules = [];
-
-    /** @var string[] */
     protected $includeFiles = [];
 
     /** @var string[] */
@@ -52,13 +49,6 @@ class Exporter
     public function paths(array $paths): self
     {
         $this->paths = array_merge($this->paths, $paths);
-
-        return $this;
-    }
-
-    public function rewriteRules(array $rewriteRules): self
-    {
-        $this->rewriteRules = array_merge($this->rewriteRules, $rewriteRules);
 
         return $this;
     }
