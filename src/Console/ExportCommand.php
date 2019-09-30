@@ -36,9 +36,7 @@ class ExportCommand extends Command
 
     public function handle(Exporter $exporter)
     {
-        $exporter->onMessage(function (string $message) {
-            $this->comment($message, 'v');
-        });
+        $exporter->setCli($this);
 
         $this->runBeforeHooks();
 

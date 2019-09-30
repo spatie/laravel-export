@@ -54,10 +54,9 @@ return [
     'disk' => null,
 
     /*
-    * The entry points of your app. The export crawler will start to build
-    * pages from these URL's.
-    */
-    'entries' => [
+     * The page paths that should be exported.
+     */
+    'paths' => [
         '/',
     ],
 
@@ -123,13 +122,13 @@ This means you can also use other filesystem drivers, so you could export your s
 
 ### Determining the export contents
 
-Determining what will be exported happens through three configurable values: `entries`, `include` and `exclude`.
+Determining what will be exported happens through three configurable values: `paths`, `include` and `exclude`.
 
-`entries` is an array of URL's that will be recursively crawled and exported to HTML. By default, the root URL of your app will be crawled which will include all pages if everything's linked properly. Adding `entries` can be useful for totally unrelated pages that need to be added to the export, like your site's RSS feed.
+`paths` is an array of URL paths that will be exported to HTML.
 
 ```php
 return [
-    'entries' => [
+    'paths' => [
         '/',
         '/rss.xml',
     ],

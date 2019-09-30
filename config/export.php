@@ -11,12 +11,9 @@ return [
     'disk' => null,
 
     /*
-     * The entry points of your app. The export crawler will start to build
-     * pages from these URL's.
+     * The page paths that should be exported.
      */
-    'entries' => [
-        '/',
-    ],
+    'paths' => [],
 
     /*
      * Files that should be included in the build.

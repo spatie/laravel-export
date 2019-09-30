@@ -2,92 +2,101 @@
 
 namespace Spatie\Export;
 
-use Spatie\Crawler\Crawler;
-use RecursiveIteratorIterator;
-use RecursiveDirectoryIterator;
-use Spatie\Crawler\CrawlInternalUrls;
-use Spatie\Export\Concerns\Messenger;
+use Illuminate\Console\Command;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use App\Http\Kernel;
+use Illuminate\Http\Request;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use Spatie\Export\Concerns\Messenger;
 
 class Exporter
 {
     use Messenger;
 
+    /** @var \App\Http\Kernel */
+    protected $kernel;
+
     /** @var \Illuminate\Contracts\Filesystem\Filesystem */
     protected $filesystem;
 
     /** @var string[] */
-    protected $entries;
+    protected $paths = [];
 
     /** @var string[] */
-    protected $include;
+    protected $include = [];
 
     /** @var string[] */
-    protected $exclude;
+    protected $exclude = [];
 
-    /** @var \Spatie\Crawler\Crawler */
-    protected $crawler;
+    /** @var \Illuminate\Console\Command */
+    protected $cli;
 
-    public function __construct(Filesystem $filesystem)
+    public function __construct(Kernel $kernel, Filesystem $filesystem)
     {
+        $this->kernel = $kernel;
         $this->filesystem = $filesystem;
-        $this->crawler = (new Crawler(new InternalClient()));
     }
 
-    public function entries(array $entries): Exporter
+    public function paths(array $paths): Exporter
     {
-        $this->entries = array_map(function (string $entry) {
-            return url($entry);
-        }, $entries);
+        $this->paths = array_merge($this->paths, $paths);
 
         return $this;
     }
 
     public function include(array $include): Exporter
     {
-        $this->include = array_map(function ($include) {
-            return is_array($include)
-                ? $include
-                : ['source' => $include, 'target' => $include];
-        }, $include);
+        $this->include = array_merge($this->include, $include);
 
         return $this;
     }
 
     public function exclude(array $exclude): Exporter
     {
-        $this->exclude = $exclude;
+        $this->exclude = array_merge($this->exclude, $exclude);
 
         return $this;
     }
 
     public function export(): void
     {
-        $this->exportEntries();
+        $this->exportPaths();
 
         $this->exportIncludedFiles();
     }
 
-    protected function exportEntries(): void
+    protected function exportPaths(): void
     {
-        foreach ($this->entries as $entry) {
-            $this->message("[{$entry}]");
+        $this->cli->comment("Exporting paths...");
 
-            $crawlObserver = new ExportCrawlObserver($this->filesystem, $entry);
-            $crawlObserver->onMessage($this->onMessage);
+        $progressBar = $this->cli->getOutput()->createProgressBar(count($this->paths));
 
-            $this->crawler
-                ->setCrawlObserver($crawlObserver)
-                ->setCrawlProfile(new CrawlInternalUrls($entry))
-                ->startCrawling($entry);
+        $progressBar->start();
+
+        foreach ($this->paths as $path) {
+            $response = $this->kernel->handle(
+                Request::create($path, 'GET')
+            );
+
+            $targetPath = '/'.ltrim($path . '/index.html', '/');
+
+            $progressBar->advance();
+
+            $contents = str_replace('http://localhost/', '/', $response->content());
+            $contents = str_replace('http://localhost', '/', $contents);
+
+            $this->filesystem->put($targetPath, $contents);
         }
+
+        $progressBar->finish();
     }
 
     protected function exportIncludedFiles(): void
     {
-        foreach ($this->include as ['source' => $source, 'target' => $target]) {
-            $this->message("[{$source}]");
+        $this->cli->comment("\nExporting files...");
 
+        foreach ($this->include as ['source' => $source, 'target' => $target]) {
             if (is_file($source)) {
                 $this->exportIncludedFile($source, $target);
             } else {
@@ -103,8 +112,6 @@ class Exporter
         }
 
         $target = '/'.ltrim($target, '/');
-
-        $this->message($target);
 
         $this->filesystem->put($target, file_get_contents($source));
     }
@@ -134,5 +141,10 @@ class Exporter
         }
 
         return false;
+    }
+
+    public function setCli(Command $cli)
+    {
+        $this->cli = $cli;
     }
 }

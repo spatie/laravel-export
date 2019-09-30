@@ -2,10 +2,11 @@
 
 namespace Spatie\Export;
 
+use Illuminate\Contracts\Filesystem\Filesystem;
+use App\Http\Kernel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Export\Console\ExportCommand;
-use Illuminate\Contracts\Filesystem\Filesystem;
 
 class ExportServiceProvider extends ServiceProvider
 {
@@ -14,8 +15,8 @@ class ExportServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/export.php', 'export');
 
         $this->app->singleton(Exporter::class, function () {
-            return (new Exporter($this->getDisk()))
-                ->entries(config('export.entries', []))
+            return (new Exporter($this->app->make(Kernel::class), $this->getDisk()))
+                ->paths(config('export.paths', []))
                 ->include(config('export.include', []))
                 ->exclude(config('export.exclude', []));
         });
