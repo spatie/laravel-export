@@ -11,33 +11,68 @@ return [
     'disk' => null,
 
     /*
-     * The page paths that should be exported.
+     * If true, the exporter will crawl through your site's pages to determine
+     * the paths that need to be exported.
+     */
+    'crawl' => true,
+
+    /*
+     * Add additional paths to be added to the export here. If you're using the
+     * `crawl` option, you probably don't need to add anything here.
+     *
+     * For example: "about", "posts/featured"
      */
     'paths' => [],
 
     /*
-     * Files that should be included in the build.
+     * Files and folders that should be included in the build. Expects
+     * key/value pairs with current paths as keys, and destination paths
+     * as values.
+     *
+     * By default your `public` folder's contents will be added to the export.
      */
-    'include' => [
-        ['source' => 'public', 'target' => ''],
+    'include_files' => [
+        'public' => '',
     ],
 
     /*
-     * Patterns that should be excluded from the build.
+     * File patterns that should be excluded from the included files.
      */
-    'exclude' => [
+    'exclude_file_patterns' => [
         '/\.php$/',
     ],
 
     /*
-     * Shell commands that should be run before the export will be created.
+     * Rewrite URLs while exporting, particularly useful to get rid of query
+     * string.
+     *
+     * By default, we'll generate pretty URLs for paginated content.
+     */
+    'rewrite_rules' => [
+        '/\?page=([0-9]+)/' => 'page/$1',
+    ],
+
+    /*
+     * Whether or not the destination folder should be emptied before starting
+     * the export.
+     */
+    'clean_before_export' => true,
+
+    /*
+     * Shell commands that should be run before the export starts when running
+     * `php artisan export`.
+     *
+     * You can skip these by adding a `--skip-{name}` flag to the command.
      */
     'before' => [
         // 'assets' => '/usr/local/bin/yarn production',
     ],
 
     /*
-     * Shell commands that should be run after the export was created.
+     * Shell commands that should be run after the export has finished when
+     * running `php artisan export`.
+     *
+     * You can skip these by adding a `--skip-{name}` flag to the command.
      */
     'after' => [
         // 'deploy' => '/usr/local/bin/netlify deploy --prod',

@@ -2,149 +2,89 @@
 
 namespace Spatie\Export;
 
-use Illuminate\Console\Command;
-use Illuminate\Contracts\Filesystem\Filesystem;
-use App\Http\Kernel;
-use Illuminate\Http\Request;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use Spatie\Export\Concerns\Messenger;
+use Spatie\Export\Jobs\CrawlSite;
+use Illuminate\Contracts\Bus\Dispatcher;
+use Spatie\Export\Jobs\CleanDestination;
+use Spatie\Export\Jobs\cleanBeforeExportDestination;
 
 class Exporter
 {
-    use Messenger;
+    /** @var \Illuminate\Contracts\Bus\Dispatcher */
+    protected $dispatcher;
 
-    /** @var \App\Http\Kernel */
-    protected $kernel;
+    /** @var boolean */
+    protected $cleanBeforeExport = false;
 
-    /** @var \Illuminate\Contracts\Filesystem\Filesystem */
-    protected $filesystem;
+    /** @var boolean */
+    protected $crawl = false;
 
     /** @var string[] */
     protected $paths = [];
 
     /** @var string[] */
-    protected $include = [];
+    protected $rewriteRules = [];
 
     /** @var string[] */
-    protected $exclude = [];
+    protected $includeFiles = [];
 
-    /** @var \Illuminate\Console\Command */
-    protected $cli;
+    /** @var string[] */
+    protected $excludeFilePatterns = [];
 
-    public function __construct(Kernel $kernel, Filesystem $filesystem)
+    public function __construct(Dispatcher $dispatcher)
     {
-        $this->kernel = $kernel;
-        $this->filesystem = $filesystem;
+        $this->dispatcher = $dispatcher;
     }
 
-    public function paths(array $paths): Exporter
+    public function cleanBeforeExport(bool $cleanBeforeExport): self
+    {
+        $this->cleanBeforeExport = $cleanBeforeExport;
+
+        return $this;
+    }
+
+    public function crawl(bool $crawl): self
+    {
+        $this->crawl = $crawl;
+
+        return $this;
+    }
+
+    public function paths(array $paths): self
     {
         $this->paths = array_merge($this->paths, $paths);
 
         return $this;
     }
 
-    public function include(array $include): Exporter
+    public function rewriteRules(array $rewriteRules): self
     {
-        $this->include = array_merge($this->include, $include);
+        $this->rewriteRules = array_merge($this->rewriteRules, $rewriteRules);
 
         return $this;
     }
 
-    public function exclude(array $exclude): Exporter
+    public function includeFiles(array $includeFiles): self
     {
-        $this->exclude = array_merge($this->exclude, $exclude);
+        $this->includeFiles = array_merge($this->includeFiles, $includeFiles);
 
         return $this;
     }
 
-    public function export(): void
+    public function excludeFilePatterns(array $excludeFilePatterns): self
     {
-        $this->exportPaths();
+        $this->excludeFilePatterns = array_merge($this->excludeFilePatterns, $excludeFilePatterns);
 
-        $this->exportIncludedFiles();
+        return $this;
     }
 
-    protected function exportPaths(): void
+    public function export()
     {
-        $this->cli->comment("Exporting paths...");
-
-        $progressBar = $this->cli->getOutput()->createProgressBar(count($this->paths));
-
-        $progressBar->start();
-
-        foreach ($this->paths as $path) {
-            $response = $this->kernel->handle(
-                Request::create($path, 'GET')
-            );
-
-            $targetPath = '/'.ltrim($path . '/index.html', '/');
-
-            $progressBar->advance();
-
-            $contents = str_replace('http://localhost/', '/', $response->content());
-            $contents = str_replace('http://localhost', '/', $contents);
-
-            $this->filesystem->put($targetPath, $contents);
+        if ($this->cleanBeforeExport) {
+            $this->dispatcher->dispatchNow(new CleanDestination());
         }
 
-        $progressBar->finish();
-    }
-
-    protected function exportIncludedFiles(): void
-    {
-        $this->cli->comment("\nExporting files...");
-
-        foreach ($this->include as ['source' => $source, 'target' => $target]) {
-            if (is_file($source)) {
-                $this->exportIncludedFile($source, $target);
-            } else {
-                $this->exportIncludedDirectory($source, $target);
-            }
+        if ($this->crawl) {
+            $this->dispatcher->dispatchNow(new CrawlSite());
         }
-    }
-
-    protected function exportIncludedFile(string $source, string $target): void
-    {
-        if ($this->excludes($source)) {
-            return;
-        }
-
-        $target = '/'.ltrim($target, '/');
-
-        $this->filesystem->put($target, file_get_contents($source));
-    }
-
-    protected function exportIncludedDirectory(string $source, string $target): void
-    {
-        $iterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($source, RecursiveDirectoryIterator::SKIP_DOTS),
-            RecursiveIteratorIterator::SELF_FIRST
-        );
-
-        foreach ($iterator as $item) {
-            if ($item->isDir()) {
-                continue;
-            }
-
-            $this->exportIncludedFile($item->getPathname(), $target.'/'.$iterator->getSubPathName());
-        }
-    }
-
-    protected function excludes(string $source): bool
-    {
-        foreach ($this->exclude as $pattern) {
-            if (preg_match($pattern, $source)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public function setCli(Command $cli)
-    {
-        $this->cli = $cli;
     }
 }

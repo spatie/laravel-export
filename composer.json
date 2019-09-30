@@ -18,7 +18,8 @@
     "require": {
         "php": "^7.2",
         "guzzlehttp/guzzle": "^6.3",
-        "laravel/framework": "^6.0",
+        "illuminate/contracts": "^6.0",
+        "illuminate/http": "^6.0",
         "nyholm/psr7": "^1.1",
         "psr/http-message": "^1.0",
         "spatie/crawler": "^4.3",
@@ -27,8 +28,7 @@
         "symfony/psr-http-message-bridge": "^1.2"
     },
     "require-dev": {
-        "larapack/dd": "^1.0",
-        "phpunit/phpunit": "^7.0"
+        "phpunit/phpunit": "^8.0"
     },
     "autoload": {
         "psr-4": {

@@ -36,13 +36,17 @@ class ExportCommand extends Command
 
     public function handle(Exporter $exporter)
     {
-        $exporter->setCli($this);
-
         $this->runBeforeHooks();
 
         $this->info('Starting export...');
 
+        $progressBar = $this->output->createProgressBar();
+
+        $progressBar->start();
+
         $exporter->export();
+
+        $progressBar->finish();
 
         if (config('export.disk')) {
             $this->info('Files were saved to disk `'.config('export.disk').'`');
