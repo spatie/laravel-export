@@ -3,14 +3,6 @@
 return [
 
     /*
-     * If set, the site will be exported to this disk. Disks can be configured
-     * in `config/filesystems.php`.
-     *
-     * If empty, your site will be exported to a `dist` folder.
-     */
-    'disk' => null,
-
-    /*
      * If true, the exporter will crawl through your site's pages to determine
      * the paths that need to be exported.
      */
@@ -47,6 +39,14 @@ return [
      * the export.
      */
     'clean_before_export' => true,
+
+    /*
+     * If set, the site will be exported to this disk. Disks can be configured
+     * in `config/filesystems.php`.
+     *
+     * If empty, your site will be exported to a `dist` folder.
+     */
+    'disk' => null,
 
     /*
      * Shell commands that should be run before the export starts when running

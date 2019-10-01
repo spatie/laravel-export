@@ -8,7 +8,7 @@
 
 ```
 $ php artisan export
-Starting export...
+Exporting site...
 Files were saved to disk `export`
 ```
 
@@ -40,76 +40,6 @@ php artisan vendor:publish ...
 
 Laravel Export doesn't require configuration to get started, but there are a few things you can tweak to your needs.
 
-Here's what the default config file looks like:
-
-```php
-return [
-
-    /*
-    * If set, the site will be exported to this disk. Disks can be configured
-    * in `config/filesystems.php`.
-    *
-    * If empty, your site will be exported to a `dist` folder.
-    */
-    'disk' => null,
-
-    /*
-     * The page paths that should be exported.
-     */
-    'paths' => [
-        '/',
-    ],
-
-    /*
-    * Files that should be included in the build.
-    */
-    'include' => [
-        ['source' => 'public', 'target' => ''],
-    ],
-
-    /*
-    * Patterns that should be excluded from the build.
-    */
-    'exclude' => [
-        '/\.php$/',
-    ],
-
-    /*
-    * Shell commands that should be run before the export will be created.
-    */
-    'before' => [
-        // 'assets' => '/usr/local/bin/yarn production',
-    ],
-
-    /*
-    * Shell commands that should be run after the export was created.
-    */
-    'after' => [
-        // 'deploy' => '/usr/local/bin/netlify deploy --prod',
-    ],
-
-];
-```
-
-### Custom disks
-
-By default, Laravel Export will save the static bundle in a `dist` folder in your application root. If you want to store the site in a different folder, [configure a new disk](https://laravel.com/docs/5.8/filesystem) in `config/filesystem.php`.
-
-```php
-// config/filesystem.php
-
-return [
-    'disks' => [
-        // ...
-
-        'export' => [
-            'driver' => 'local',
-            'root' => base_path('out'),
-        ],
-    ],
-];
-```
-
 ```php
 // config/export.php
 
@@ -122,9 +52,19 @@ This means you can also use other filesystem drivers, so you could export your s
 
 ### Determining the export contents
 
-Determining what will be exported happens through three configurable values: `paths`, `include` and `exclude`.
+#### Crawling
 
-`paths` is an array of URL paths that will be exported to HTML.
+With the default configuration, Laravel Export will crawl your site and export every page to a static site. If you'd like to disable this behaviour, disable the `crawl` option.
+
+```php
+return [
+    'crawl' => true,
+];
+```
+
+#### Paths
+
+`paths` is an array of URL paths that will be exported to HTML. Use this to manually determine which pages should be exported.
 
 ```php
 return [
@@ -135,22 +75,63 @@ return [
 ];
 ```
 
-`include` allows you to specify files and folders relative to the application root that should be added to the export. By default, we'll include the entire `public` folder.
+#### Including files
+
+`include_files` allows you to specify files and folders relative to the application root that should be added to the export. By default, we'll include the entire `public` folder.
 
 ```php
 return [
-    'include' => [
-        ['source' => 'public', 'target' => ''],
+    'include_files' => [
+        'public' => '',
     ],
 ];
 ```
 
-`exclude` will check all source paths of included files, and exclude them if they match a pattern from in `exclude`. By default, all PHP files will be excluded, mainly to stop `index.php` from appearing in your export.
+`exclude_file_patterns` will check all source paths of included files, and exclude them if they match a pattern from in `exclude_file_patterns`. By default, all PHP files will be excluded, mainly to stop `index.php` from appearing in your export.
 
 ```php
 return [
-    'exclude' => [
+    'exclude_file_patterns' => [
         '/\.php$/',
+    ],
+];
+```
+
+#### Configuration through code
+
+All configuration options that affect the exports contents are also exposed in the `Exporter` class. You can inject this class to modify the export settings through code.
+
+```php
+use Illuminate\Support\ServiceProvider;
+use Spatie\Export\Exporter;
+
+class AppServiceProvider extends ServiceProvider
+{
+    public function boot(Exporter $exporter)
+    {
+        $exporter->crawl(false);
+
+        $exporter->paths(['', 'about', 'contact', 'posts']);
+        $exporter->paths(Post::all()->pluck('slug'));
+    }
+}
+```
+
+### Custom disks
+
+By default, Laravel Export will save the static bundle in a `dist` folder in your application root. If you want to store the site in a different folder, [configure a new disk](https://laravel.com/docs/5.8/filesystem) in `config/filesystem.php`.
+
+```php
+// config/filesystem.php
+
+return [
+    'disks' => [
+        //
+
+        'export' => [
+            'driver' => 'local',
+            'root' => base_path('out'),
+        ],
     ],
 ];
 ```
