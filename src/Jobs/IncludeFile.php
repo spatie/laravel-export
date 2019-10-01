@@ -2,32 +2,37 @@
 
 namespace Spatie\Export\Jobs;
 
-use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use RuntimeException;
 use Spatie\Export\Destination;
 
-class IncludeFiles
+class IncludeFile
 {
-    /** @var string[] */
-    protected $includeFiles;
+    /** @var string */
+    protected $source;
+
+    /** @var string */
+    protected $target;
 
     /** @var string[] */
     protected $excludeFilePatterns;
 
-    public function __construct(array $includeFiles, array $excludeFilePatterns)
+    public function __construct(string $source, string $target, array $excludeFilePatterns)
     {
-        $this->includeFiles = $includeFiles;
+        $this->source = $source;
+        $this->target = $target;
         $this->excludeFilePatterns = $excludeFilePatterns;
     }
 
     public function handle(Destination $destination)
     {
-        foreach ($this->includeFiles as $source => $target) {
-            if (is_file($source)) {
-                $this->exportIncludedFile($source, $target, $destination);
-            } else {
-                $this->exportIncludedDirectory($source, $target, $destination);
-            }
+        if (is_file($this->source)) {
+            $this->exportIncludedFile($this->source, $this->target, $destination);
+        } else if (is_dir($this->source)) {
+            $this->exportIncludedDirectory($this->source, $this->target, $destination);
+        } else {
+            throw new RuntimeException("File or directory [{$this->source}] not found");
         }
     }
 

@@ -2,10 +2,11 @@
 
 namespace Spatie\Export;
 
+use Spatie\Export\Jobs\CrawlSite;
+use Spatie\Export\Jobs\ExportPath;
+use Spatie\Export\Jobs\IncludeFile;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Spatie\Export\Jobs\CleanDestination;
-use Spatie\Export\Jobs\CrawlSite;
-use Spatie\Export\Jobs\IncludeFiles;
 
 class Exporter
 {
@@ -81,9 +82,15 @@ class Exporter
             );
         }
 
-        if (count($this->includeFiles)) {
+        foreach ($this->paths as $path) {
             $this->dispatcher->dispatchNow(
-                new IncludeFiles($this->includeFiles, $this->excludeFilePatterns)
+                new ExportPath($path)
+            );
+        }
+
+        foreach ($this->includeFiles as $source => $target) {
+            $this->dispatcher->dispatchNow(
+                new IncludeFile($source, $target, $this->excludeFilePatterns)
             );
         }
     }

@@ -6,10 +6,9 @@ use GuzzleHttp\Client;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Promise\FulfilledPromise;
-use Illuminate\Http\Request as LaravelRequest;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\Http\Kernel as HttpKernel;
 use Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
-use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 class LocalClient extends Client
 {
@@ -29,15 +28,11 @@ class LocalClient extends Client
 
         $this->psrHttpFactory = new PsrHttpFactory($psr17Factory, $psr17Factory, $psr17Factory, $psr17Factory);
     }
+
     public function sendAsync(RequestInterface $request, array $options = [])
     {
-        $symfonyRequest = SymfonyRequest::create(
-            (string) $request->getUri(),
-            $request->getMethod()
-        );
-
         $response = $this->kernel->handle(
-            LaravelRequest::createFromBase($symfonyRequest)
+            Request::create((string) $request->getUri())
         );
 
         $psrResponse = $this->psrHttpFactory->createResponse($response);
