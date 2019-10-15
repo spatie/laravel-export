@@ -17,7 +17,7 @@ class ExportTest extends BaseTestCase
     {
         parent::setUp();
 
-        exec('rm -r ' . __DIR__ . '/dist');
+        exec('rm -r '.__DIR__.'/dist');
 
         Route::get('/', function () {
             return static::HOME_CONTENT;
