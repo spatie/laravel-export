@@ -11,6 +11,7 @@ class ExportTest extends BaseTestCase
 {
     protected const HOME_CONTENT = '<a href="feed/blog.atom" title="all blogposts">Feed</a>Home <a href="about">About</a>';
     protected const ABOUT_CONTENT = 'About';
+    protected const FEED_CONTENT = 'Feed';
 
     protected function setUp() : void
     {
@@ -25,6 +26,9 @@ class ExportTest extends BaseTestCase
         Route::get('about', function () {
             return static::ABOUT_CONTENT;
         });
+
+        Route::get('feed/blog.atom', function () {
+            return static::FEED_CONTENT;
         });
     }
 
@@ -78,6 +82,18 @@ class ExportTest extends BaseTestCase
         $this->assertFileExists(__DIR__.'/dist/media/image.png');
 
         $this->assertFileNotExists(__DIR__.'/dist/index.php');
+    }
+
+    /** @test */
+    public function it_exports_non_html_files()
+    {
+        app(Exporter::class)->export();
+
+        $this->assertFileExists(__DIR__.'/dist/feed/blog.atom');
+        $this->assertEquals(
+            static::FEED_CONTENT,
+            file_get_contents(__DIR__.'/dist/feed/blog.atom')
+        );
     }
 
     protected function getPackageProviders($app)
