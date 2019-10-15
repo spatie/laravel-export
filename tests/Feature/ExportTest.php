@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Spatie\Export\ExportServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
-class IntegrationTest extends BaseTestCase
+class ExportTest extends BaseTestCase
 {
 
 
