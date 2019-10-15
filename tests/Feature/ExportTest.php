@@ -9,6 +9,8 @@ use Orchestra\Testbench\TestCase as BaseTestCase;
 
 class ExportTest extends BaseTestCase
 {
+    protected const HOME_CONTENT = '<a href="feed/blog.atom" title="all blogposts">Feed</a>Home <a href="about">About</a>';
+    protected const ABOUT_CONTENT = 'About';
 
     protected function setUp() : void
     {
@@ -17,11 +19,12 @@ class ExportTest extends BaseTestCase
         exec('rm -r ' . __DIR__ . '/dist');
 
         Route::get('/', function () {
-            return 'Home <a href="about">About</a>';
+            return static::HOME_CONTENT;
         });
 
         Route::get('about', function () {
-            return 'About';
+            return static::ABOUT_CONTENT;
+        });
         });
     }
 
@@ -32,13 +35,13 @@ class ExportTest extends BaseTestCase
 
         $this->assertFileExists(__DIR__.'/dist/index.html');
         $this->assertEquals(
-            'Home <a href="about">About</a>',
+            static::HOME_CONTENT,
             file_get_contents(__DIR__.'/dist/index.html')
         );
 
         $this->assertFileExists(__DIR__.'/dist/about/index.html');
         $this->assertEquals(
-            'About',
+            static::ABOUT_CONTENT,
             file_get_contents(__DIR__.'/dist/about/index.html')
         );
     }
@@ -53,13 +56,13 @@ class ExportTest extends BaseTestCase
 
         $this->assertFileExists(__DIR__.'/dist/index.html');
         $this->assertEquals(
-            'Home <a href="about">About</a>',
+            static::HOME_CONTENT,
             file_get_contents(__DIR__.'/dist/index.html')
         );
 
         $this->assertFileExists(__DIR__.'/dist/about/index.html');
         $this->assertEquals(
-            'About',
+            static::ABOUT_CONTENT,
             file_get_contents(__DIR__.'/dist/about/index.html')
         );
     }
