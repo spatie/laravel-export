@@ -10,7 +10,6 @@ use Orchestra\Testbench\TestCase as BaseTestCase;
 class ExportTest extends BaseTestCase
 {
 
-
     protected function setUp() : void
     {
         parent::setUp();
