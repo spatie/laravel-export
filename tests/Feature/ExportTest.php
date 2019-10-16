@@ -7,22 +7,28 @@ use Illuminate\Support\Facades\Route;
 use Spatie\Export\ExportServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
-class IntegrationTest extends BaseTestCase
+class ExportTest extends BaseTestCase
 {
-
+    protected const HOME_CONTENT = '<a href="feed/blog.atom" title="all blogposts">Feed</a>Home <a href="about">About</a>';
+    protected const ABOUT_CONTENT = 'About';
+    protected const FEED_CONTENT = 'Feed';
 
     protected function setUp() : void
     {
         parent::setUp();
 
-        exec('rm -r ' . __DIR__ . '/dist');
+        exec('rm -r '.__DIR__.'/dist');
 
         Route::get('/', function () {
-            return 'Home <a href="about">About</a>';
+            return static::HOME_CONTENT;
         });
 
         Route::get('about', function () {
-            return 'About';
+            return static::ABOUT_CONTENT;
+        });
+
+        Route::get('feed/blog.atom', function () {
+            return static::FEED_CONTENT;
         });
     }
 
@@ -33,13 +39,13 @@ class IntegrationTest extends BaseTestCase
 
         $this->assertFileExists(__DIR__.'/dist/index.html');
         $this->assertEquals(
-            'Home <a href="about">About</a>',
+            static::HOME_CONTENT,
             file_get_contents(__DIR__.'/dist/index.html')
         );
 
         $this->assertFileExists(__DIR__.'/dist/about/index.html');
         $this->assertEquals(
-            'About',
+            static::ABOUT_CONTENT,
             file_get_contents(__DIR__.'/dist/about/index.html')
         );
     }
@@ -54,13 +60,13 @@ class IntegrationTest extends BaseTestCase
 
         $this->assertFileExists(__DIR__.'/dist/index.html');
         $this->assertEquals(
-            'Home <a href="about">About</a>',
+            static::HOME_CONTENT,
             file_get_contents(__DIR__.'/dist/index.html')
         );
 
         $this->assertFileExists(__DIR__.'/dist/about/index.html');
         $this->assertEquals(
-            'About',
+            static::ABOUT_CONTENT,
             file_get_contents(__DIR__.'/dist/about/index.html')
         );
     }
@@ -76,6 +82,18 @@ class IntegrationTest extends BaseTestCase
         $this->assertFileExists(__DIR__.'/dist/media/image.png');
 
         $this->assertFileNotExists(__DIR__.'/dist/index.php');
+    }
+
+    /** @test */
+    public function it_exports_non_html_files()
+    {
+        app(Exporter::class)->export();
+
+        $this->assertFileExists(__DIR__.'/dist/feed/blog.atom');
+        $this->assertEquals(
+            static::FEED_CONTENT,
+            file_get_contents(__DIR__.'/dist/feed/blog.atom')
+        );
     }
 
     protected function getPackageProviders($app)
