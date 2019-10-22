@@ -2,15 +2,17 @@
 
 namespace Spatie\Export\Crawler;
 
-use Illuminate\Support\Str;
 use Spatie\Export\Destination;
 use Spatie\Crawler\CrawlObserver;
 use Psr\Http\Message\UriInterface;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Exception\RequestException;
+use Spatie\Export\Traits\NormalizesPath;
 
 class Observer extends CrawlObserver
 {
+    use NormalizesPath;
+
     /** @var string */
     protected $entry;
 
@@ -37,14 +39,5 @@ class Observer extends CrawlObserver
     public function crawlFailed(UriInterface $url, RequestException $requestException, ?UriInterface $foundOnUrl = null)
     {
         throw $requestException;
-    }
-
-    protected function normalizePath(string $path)
-    {
-        if (! Str::contains(basename($path), '.')) {
-            $path .= '/index.html';
-        }
-
-        return ltrim($path, '/');
     }
 }

@@ -7,9 +7,12 @@ use Spatie\Export\Destination;
 use Illuminate\Contracts\Http\Kernel;
 use RuntimeException;
 use Spatie\Export\Crawler\LocalClient;
+use Spatie\Export\Traits\NormalizesPath;
 
 class ExportPath
 {
+    use NormalizesPath;
+
     /** @var string */
     protected $path;
 
@@ -28,6 +31,6 @@ class ExportPath
             throw new RuntimeException("Path [{$this->path}] returned status code [{$response->status()}]");
         }
 
-        $destination->write($this->path . '/index.html', $response->content());
+        $destination->write($this->normalizePath($this->path), $response->content());
     }
 }
