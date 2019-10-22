@@ -33,42 +33,26 @@ class ExportTest extends BaseTestCase
     }
 
     /** @test */
-    public function it_crawls_and_exports_routes()
+    public function it_crawls_and_exports_routes(): void
     {
         app(Exporter::class)->export();
 
-        $this->assertFileExists(__DIR__.'/dist/index.html');
-        $this->assertEquals(
-            static::HOME_CONTENT,
-            file_get_contents(__DIR__.'/dist/index.html')
-        );
-
-        $this->assertFileExists(__DIR__.'/dist/about/index.html');
-        $this->assertEquals(
-            static::ABOUT_CONTENT,
-            file_get_contents(__DIR__.'/dist/about/index.html')
-        );
+        static::assertHomeExists();
+        static::assertAboutExists();
+        static::assertFeedBlogAtomExists();
     }
 
     /** @test */
-    public function it_exports_paths()
+    public function it_exports_paths(): void
     {
         app(Exporter::class)
             ->crawl(false)
-            ->paths(['/', '/about'])
+            ->paths(['/', '/about', '/feed/blog.atom'])
             ->export();
 
-        $this->assertFileExists(__DIR__.'/dist/index.html');
-        $this->assertEquals(
-            static::HOME_CONTENT,
-            file_get_contents(__DIR__.'/dist/index.html')
-        );
-
-        $this->assertFileExists(__DIR__.'/dist/about/index.html');
-        $this->assertEquals(
-            static::ABOUT_CONTENT,
-            file_get_contents(__DIR__.'/dist/about/index.html')
-        );
+        static::assertHomeExists();
+        static::assertAboutExists();
+        static::assertFeedBlogAtomExists();
     }
 
     /** @test */
@@ -78,22 +62,14 @@ class ExportTest extends BaseTestCase
             ->includeFiles([__DIR__.'/public' => ''])
             ->export();
 
+        static::assertHomeExists();
+        static::assertAboutExists();
+        static::assertFeedBlogAtomExists();
+
         $this->assertFileExists(__DIR__.'/dist/favicon.ico');
         $this->assertFileExists(__DIR__.'/dist/media/image.png');
 
         $this->assertFileNotExists(__DIR__.'/dist/index.php');
-    }
-
-    /** @test */
-    public function it_exports_non_html_files()
-    {
-        app(Exporter::class)->export();
-
-        $this->assertFileExists(__DIR__.'/dist/feed/blog.atom');
-        $this->assertEquals(
-            static::FEED_CONTENT,
-            file_get_contents(__DIR__.'/dist/feed/blog.atom')
-        );
     }
 
     protected function getPackageProviders($app)
@@ -110,5 +86,26 @@ class ExportTest extends BaseTestCase
 
         $app['config']->set('export.disk', 'export');
         $app['config']->set('export.include_files', []);
+    }
+
+    protected static function assertHomeExists(): void
+    {
+        static::assertExportedFile(__DIR__.'/dist/index.html', static::HOME_CONTENT);
+    }
+
+    protected static function assertAboutExists(): void
+    {
+        static::assertExportedFile(__DIR__.'/dist/about/index.html', static::ABOUT_CONTENT);
+    }
+
+    protected static function assertFeedBlogAtomExists(): void
+    {
+        static::assertExportedFile(__DIR__.'/dist/feed/blog.atom', static::FEED_CONTENT);
+    }
+
+    protected static function assertExportedFile(string $path, string $content): void
+    {
+        static::assertFileExists($path);
+        static::assertEquals($content, file_get_contents($path));
     }
 }
