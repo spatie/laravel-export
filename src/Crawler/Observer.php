@@ -6,8 +6,8 @@ use Spatie\Export\Destination;
 use Spatie\Crawler\CrawlObserver;
 use Psr\Http\Message\UriInterface;
 use Psr\Http\Message\ResponseInterface;
-use GuzzleHttp\Exception\RequestException;
 use Spatie\Export\Traits\NormalizesPath;
+use GuzzleHttp\Exception\RequestException;
 
 class Observer extends CrawlObserver
 {

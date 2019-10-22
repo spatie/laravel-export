@@ -2,11 +2,10 @@
 
 namespace Spatie\Export\Jobs;
 
+use RuntimeException;
 use Illuminate\Http\Request;
 use Spatie\Export\Destination;
 use Illuminate\Contracts\Http\Kernel;
-use RuntimeException;
-use Spatie\Export\Crawler\LocalClient;
 use Spatie\Export\Traits\NormalizesPath;
 
 class ExportPath
