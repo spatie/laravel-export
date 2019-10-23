@@ -2,13 +2,13 @@
 
 namespace Spatie\Export;
 
-use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Support\Str;
 use Spatie\Export\Jobs\CrawlSite;
 use Spatie\Export\Jobs\ExportPath;
 use Spatie\Export\Jobs\IncludeFile;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Spatie\Export\Jobs\CleanDestination;
+use Illuminate\Contracts\Routing\UrlGenerator;
 
 class Exporter
 {
@@ -18,10 +18,10 @@ class Exporter
     /** @var UrlGenerator */
     protected $urlGenerator;
 
-    /** @var boolean */
+    /** @var bool */
     protected $cleanBeforeExport = false;
 
-    /** @var boolean */
+    /** @var bool */
     protected $crawl = false;
 
     /** @var string[] */

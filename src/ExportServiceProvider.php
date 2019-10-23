@@ -4,7 +4,6 @@ namespace Spatie\Export;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Contracts\Bus\Dispatcher;
 use Spatie\Export\Console\ExportCommand;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Spatie\Export\Destinations\FilesystemDestination;
