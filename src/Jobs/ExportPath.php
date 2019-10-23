@@ -2,6 +2,7 @@
 
 namespace Spatie\Export\Jobs;
 
+use Illuminate\Contracts\Routing\UrlGenerator;
 use RuntimeException;
 use Illuminate\Http\Request;
 use Spatie\Export\Destination;
@@ -20,10 +21,10 @@ class ExportPath
         $this->path = $path;
     }
 
-    public function handle(Kernel $kernel, Destination $destination)
+    public function handle(Kernel $kernel, Destination $destination, UrlGenerator $urlGenerator)
     {
         $response = $kernel->handle(
-            Request::create($this->path)
+            Request::create($urlGenerator->to($this->path))
         );
 
         if ($response->status() !== 200) {
