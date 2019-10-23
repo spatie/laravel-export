@@ -56,6 +56,33 @@ class ExportTest extends BaseTestCase
     }
 
     /** @test */
+    public function it_exports_urls(): void
+    {
+        app(Exporter::class)
+            ->crawl(false)
+            ->urls([url('/'), url('/about'), url('/feed/blog.atom')])
+            ->export();
+
+        static::assertHomeExists();
+        static::assertAboutExists();
+        static::assertFeedBlogAtomExists();
+    }
+
+    /** @test */
+    public function it_exports_mixed(): void
+    {
+        app(Exporter::class)
+            ->crawl(false)
+            ->paths('/')
+            ->urls(url('/about'), url('/feed/blog.atom'))
+            ->export();
+
+        static::assertHomeExists();
+        static::assertAboutExists();
+        static::assertFeedBlogAtomExists();
+    }
+
+    /** @test */
     public function it_exports_included_files()
     {
         app(Exporter::class)
