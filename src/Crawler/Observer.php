@@ -6,12 +6,12 @@ use Spatie\Export\Destination;
 use Spatie\Crawler\CrawlObserver;
 use Psr\Http\Message\UriInterface;
 use Psr\Http\Message\ResponseInterface;
-use Spatie\Export\Traits\NormalizesPath;
+use Spatie\Export\Traits\NormalizedPath;
 use GuzzleHttp\Exception\RequestException;
 
 class Observer extends CrawlObserver
 {
-    use NormalizesPath;
+    use NormalizedPath;
 
     /** @var string */
     protected $entry;
