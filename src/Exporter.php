@@ -2,21 +2,26 @@
 
 namespace Spatie\Export;
 
+use Illuminate\Support\Str;
 use Spatie\Export\Jobs\CrawlSite;
 use Spatie\Export\Jobs\ExportPath;
 use Spatie\Export\Jobs\IncludeFile;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Spatie\Export\Jobs\CleanDestination;
+use Illuminate\Contracts\Routing\UrlGenerator;
 
 class Exporter
 {
     /** @var \Illuminate\Contracts\Bus\Dispatcher */
     protected $dispatcher;
 
-    /** @var boolean */
+    /** @var UrlGenerator */
+    protected $urlGenerator;
+
+    /** @var bool */
     protected $cleanBeforeExport = false;
 
-    /** @var boolean */
+    /** @var bool */
     protected $crawl = false;
 
     /** @var string[] */
@@ -28,9 +33,10 @@ class Exporter
     /** @var string[] */
     protected $excludeFilePatterns = [];
 
-    public function __construct(Dispatcher $dispatcher)
+    public function __construct(Dispatcher $dispatcher, UrlGenerator $urlGenerator)
     {
         $this->dispatcher = $dispatcher;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function cleanBeforeExport(bool $cleanBeforeExport): self
@@ -47,9 +53,22 @@ class Exporter
         return $this;
     }
 
-    public function paths(array $paths): self
+    public function paths(...$paths): self
     {
+        $paths = is_array($paths[0]) ? $paths[0] : $paths;
+
         $this->paths = array_merge($this->paths, $paths);
+
+        return $this;
+    }
+
+    public function urls(...$urls): self
+    {
+        $urls = is_array($urls[0]) ? $urls[0] : $urls;
+
+        $this->paths(array_map(function (string $url): string {
+            return Str::replaceFirst($this->urlGenerator->to('/'), '', $url);
+        }, $urls));
 
         return $this;
     }

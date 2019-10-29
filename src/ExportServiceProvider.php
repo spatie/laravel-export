@@ -4,14 +4,13 @@ namespace Spatie\Export;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Contracts\Bus\Dispatcher;
 use Spatie\Export\Console\ExportCommand;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Spatie\Export\Destinations\FilesystemDestination;
 
 class ExportServiceProvider extends ServiceProvider
 {
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/export.php', 'export');
 
@@ -19,27 +18,27 @@ class ExportServiceProvider extends ServiceProvider
             return new FilesystemDestination($this->getDisk());
         });
 
-        $this->app->singleton(Exporter::class, function () {
-            return (new Exporter($this->app->make(Dispatcher::class)))
-                ->cleanBeforeExport(config('export.clean_before_export', false))
-                ->crawl(config('export.crawl', false))
-                ->paths(config('export.paths', []))
-                ->includeFiles(config('export.include_files', []))
-                ->excludeFilePatterns(config('export.exclude_file_patterns', []));
-        });
-
-        $this->commands([
-            ExportCommand::class,
-        ]);
+        $this->app->singleton(Exporter::class);
     }
 
-    public function boot()
+    public function boot(): void
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/../config/export.php' => config_path('export.php'),
             ], 'config');
+
+            $this->commands([
+                ExportCommand::class,
+            ]);
         }
+
+        $this->app->make(Exporter::class)
+            ->cleanBeforeExport(config('export.clean_before_export', false))
+            ->crawl(config('export.crawl', false))
+            ->paths(config('export.paths', []))
+            ->includeFiles(config('export.include_files', []))
+            ->excludeFilePatterns(config('export.exclude_file_patterns', []));
     }
 
     protected function getDisk(): Filesystem
