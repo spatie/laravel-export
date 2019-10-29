@@ -6,12 +6,12 @@ use RuntimeException;
 use Illuminate\Http\Request;
 use Spatie\Export\Destination;
 use Illuminate\Contracts\Http\Kernel;
-use Spatie\Export\Traits\NormalizedPath;
+use Spatie\Export\Traits\NormalizesPaths;
 use Illuminate\Contracts\Routing\UrlGenerator;
 
 class ExportPath
 {
-    use NormalizedPath;
+    use NormalizesPaths;
 
     /** @var string */
     protected $path;

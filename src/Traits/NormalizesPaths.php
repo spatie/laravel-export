@@ -4,7 +4,7 @@ namespace Spatie\Export\Traits;
 
 use Illuminate\Support\Str;
 
-trait NormalizedPath
+trait NormalizesPaths
 {
     protected function normalizePath(string $path)
     {
