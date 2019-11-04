@@ -33,7 +33,7 @@ composer require spatie/laravel-export
 After the package is installed, you can optionally publish the config file.
 
 ```bash
-php artisan vendor:publish ...
+php artisan vendor:publish --provider=Spatie\\Export\\ExportServiceProvider
 ```
 
 ## Configuration
