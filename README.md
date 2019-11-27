@@ -87,12 +87,13 @@ return [
 ];
 ```
 
-`exclude_file_patterns` will check all source paths of included files, and exclude them if they match a pattern from in `exclude_file_patterns`. By default, all PHP files will be excluded, mainly to stop `index.php` from appearing in your export.
+`exclude_file_patterns` will check all source paths of included files, and exclude them if they match a pattern from in `exclude_file_patterns`. By default, all PHP files will be excluded, mainly to stop `index.php` from appearing in your export. Because the `mix-manifest.json` is no longer needed after compilation it is also excluded by default.
 
 ```php
 return [
     'exclude_file_patterns' => [
         '/\.php$/',
+        '/mix-manifest\.json$/',
     ],
 ];
 ```
