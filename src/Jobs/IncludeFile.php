@@ -29,7 +29,7 @@ class IncludeFile
     {
         if (is_file($this->source)) {
             $this->exportIncludedFile($this->source, $this->target, $destination);
-        } else if (is_dir($this->source)) {
+        } elseif (is_dir($this->source)) {
             $this->exportIncludedDirectory($this->source, $this->target, $destination);
         } else {
             throw new RuntimeException("File or directory [{$this->source}] not found");
