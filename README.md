@@ -173,7 +173,7 @@ php artisan export --skip-deploy
 
 To build a bundle, run the `export` command:
 
-```
+```bash
 php artisan export
 ```
 
