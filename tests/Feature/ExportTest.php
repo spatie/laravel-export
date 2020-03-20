@@ -33,7 +33,7 @@ class ExportTest extends BaseTestCase
     }
 
     /** @test */
-    public function it_crawls_and_exports_routes(): void
+    public function it_crawls_and_exports_routes()
     {
         app(Exporter::class)->export();
 
@@ -43,7 +43,7 @@ class ExportTest extends BaseTestCase
     }
 
     /** @test */
-    public function it_exports_paths(): void
+    public function it_exports_paths()
     {
         app(Exporter::class)
             ->crawl(false)
@@ -56,7 +56,7 @@ class ExportTest extends BaseTestCase
     }
 
     /** @test */
-    public function it_exports_urls(): void
+    public function it_exports_urls()
     {
         app(Exporter::class)
             ->crawl(false)
@@ -69,7 +69,7 @@ class ExportTest extends BaseTestCase
     }
 
     /** @test */
-    public function it_exports_mixed(): void
+    public function it_exports_mixed()
     {
         app(Exporter::class)
             ->crawl(false)
