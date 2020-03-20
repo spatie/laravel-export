@@ -83,7 +83,7 @@ class ExportTest extends BaseTestCase
     }
 
     /** @test */
-    public function it_exports_included_files()
+    public function it_exports_included_files(): void
     {
         app(Exporter::class)
             ->includeFiles([__DIR__.'/public' => ''])
