@@ -13,7 +13,7 @@ class ExportTest extends BaseTestCase
     protected const ABOUT_CONTENT = 'About';
     protected const FEED_CONTENT = 'Feed';
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
