@@ -20,7 +20,7 @@ class ExportTest extends BaseTestCase
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             exec('del '.__DIR__.'\dist /q');
         } else {
-            exec('rm -r '.__DIR__.'/dist');        
+            exec('rm -r '.__DIR__.'/dist');
         }
 
         Route::get('/', function () {
