@@ -5,9 +5,9 @@ namespace Spatie\Export\Jobs;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Spatie\Crawler\Crawler;
 use Spatie\Crawler\CrawlInternalUrls;
+use Spatie\Export\Crawler\LocalClient;
 use Spatie\Export\Crawler\Observer;
 use Spatie\Export\Destination;
-use Spatie\Export\Crawler\LocalClient;
 
 class CrawlSite
 {

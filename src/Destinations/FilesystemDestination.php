@@ -2,8 +2,8 @@
 
 namespace Spatie\Export\Destinations;
 
-use Spatie\Export\Destination;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Spatie\Export\Destination;
 
 class FilesystemDestination implements Destination
 {

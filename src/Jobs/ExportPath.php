@@ -2,12 +2,12 @@
 
 namespace Spatie\Export\Jobs;
 
-use RuntimeException;
-use Illuminate\Http\Request;
-use Spatie\Export\Destination;
 use Illuminate\Contracts\Http\Kernel;
-use Spatie\Export\Traits\NormalizedPath;
 use Illuminate\Contracts\Routing\UrlGenerator;
+use Illuminate\Http\Request;
+use RuntimeException;
+use Spatie\Export\Destination;
+use Spatie\Export\Traits\NormalizedPath;
 
 class ExportPath
 {
