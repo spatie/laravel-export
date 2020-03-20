@@ -2,7 +2,7 @@
 
 All notable changes to `laravel-export` will be documented in this file
 
-## 0.1.6 - 2020-03-20
+## 0.3.0 - 2020-03-20
 
 - Add support for Laravel 7
 
