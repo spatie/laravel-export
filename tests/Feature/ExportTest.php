@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\Export\Tests\Integration;
+namespace Spatie\Export\Tests\Feature;
 
 use Illuminate\Support\Facades\Route;
 use Orchestra\Testbench\TestCase as BaseTestCase;
