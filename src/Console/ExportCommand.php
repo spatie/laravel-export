@@ -2,11 +2,11 @@
 
 namespace Spatie\Export\Console;
 
-use Spatie\Export\Exporter;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-use Symfony\Component\Process\Process;
+use Spatie\Export\Exporter;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Process\Process;
 
 class ExportCommand extends Command
 {

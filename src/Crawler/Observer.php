@@ -2,12 +2,12 @@
 
 namespace Spatie\Export\Crawler;
 
-use Spatie\Export\Destination;
-use Spatie\Crawler\CrawlObserver;
-use Psr\Http\Message\UriInterface;
-use Psr\Http\Message\ResponseInterface;
-use Spatie\Export\Traits\NormalizedPath;
 use GuzzleHttp\Exception\RequestException;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\UriInterface;
+use Spatie\Crawler\CrawlObserver;
+use Spatie\Export\Destination;
+use Spatie\Export\Traits\NormalizedPath;
 
 class Observer extends CrawlObserver
 {

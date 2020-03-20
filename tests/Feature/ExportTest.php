@@ -2,10 +2,10 @@
 
 namespace Spatie\Export\Tests\Integration;
 
-use Spatie\Export\Exporter;
 use Illuminate\Support\Facades\Route;
-use Spatie\Export\ExportServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
+use Spatie\Export\Exporter;
+use Spatie\Export\ExportServiceProvider;
 
 class ExportTest extends BaseTestCase
 {
@@ -13,7 +13,7 @@ class ExportTest extends BaseTestCase
     protected const ABOUT_CONTENT = 'About';
     protected const FEED_CONTENT = 'Feed';
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -3,11 +3,11 @@
 namespace Spatie\Export\Crawler;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Promise\FulfilledPromise;
+use Illuminate\Contracts\Http\Kernel as HttpKernel;
+use Illuminate\Http\Request;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\RequestInterface;
-use GuzzleHttp\Promise\FulfilledPromise;
-use Illuminate\Http\Request;
-use Illuminate\Contracts\Http\Kernel as HttpKernel;
 use Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
 
 class LocalClient extends Client
