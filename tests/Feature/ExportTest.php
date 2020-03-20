@@ -86,7 +86,7 @@ class ExportTest extends BaseTestCase
     public function it_exports_included_files()
     {
         app(Exporter::class)
-            ->includeFiles([__DIR__.'/public' => ''])
+            ->includeFiles([__DIR__.'/../stubs/public' => ''])
             ->export();
 
         static::assertHomeExists();
