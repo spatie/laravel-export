@@ -4,8 +4,8 @@ namespace Spatie\Export\Tests\Integration;
 
 use Illuminate\Support\Facades\Route;
 use Orchestra\Testbench\TestCase as BaseTestCase;
-use Spatie\Export\ExportServiceProvider;
 use Spatie\Export\Exporter;
+use Spatie\Export\ExportServiceProvider;
 
 class ExportTest extends BaseTestCase
 {
