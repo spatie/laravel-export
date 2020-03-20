@@ -2,10 +2,10 @@
 
 namespace Spatie\Export\Tests\Integration;
 
-use Spatie\Export\Exporter;
 use Illuminate\Support\Facades\Route;
-use Spatie\Export\ExportServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
+use Spatie\Export\ExportServiceProvider;
+use Spatie\Export\Exporter;
 
 class ExportTest extends BaseTestCase
 {
