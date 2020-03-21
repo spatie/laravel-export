@@ -13,11 +13,15 @@ class ExportTest extends BaseTestCase
     protected const ABOUT_CONTENT = 'About';
     protected const FEED_CONTENT = 'Feed';
 
+    protected $distDirectory = __DIR__.'/dist';
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        exec('rm -r '.__DIR__.'/dist');
+        if (file_exists($this->distDirectory)) {
+            exec('rm -r '.$this->distDirectory);
+        }
 
         Route::get('/', function () {
             return static::HOME_CONTENT;
