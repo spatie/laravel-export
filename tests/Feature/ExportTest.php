@@ -13,14 +13,16 @@ class ExportTest extends BaseTestCase
     protected const ABOUT_CONTENT = 'About';
     protected const FEED_CONTENT = 'Feed';
 
-    protected $distDirectory = __DIR__.'/dist';
+    protected $distDirectory = __DIR__.DIRECTORY_SEPARATOR.'dist';
 
     protected function setUp(): void
     {
         parent::setUp();
 
         if (file_exists($this->distDirectory)) {
-            exec('rm -r '.$this->distDirectory);
+            exec(strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'
+            ? 'del '.$this->distDirectory.' /q'
+            : 'rm -r '.$this->distDirectory);
         }
 
         Route::get('/', function () {
