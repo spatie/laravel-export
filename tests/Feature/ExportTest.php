@@ -19,7 +19,7 @@ class ExportTest extends BaseTestCase
     {
         parent::setUp();
 
-        if (file_exists($this->distDirectory)) {            
+        if (file_exists($this->distDirectory)) {
             exec(strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'
             ? 'del '.$this->distDirectory.' /q'
             : 'rm -r '.$this->distDirectory);
