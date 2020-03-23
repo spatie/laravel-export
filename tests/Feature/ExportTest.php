@@ -17,11 +17,9 @@ class ExportTest extends BaseTestCase
     {
         parent::setUp();
 
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            exec('del '.__DIR__.'\dist /q');
-        } else {
-            exec('rm -r '.__DIR__.'/dist');
-        }
+        exec(strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'
+            ? 'del '.__DIR__.'\dist /q' 
+            : 'rm -r '.__DIR__.'/dist');
 
         Route::get('/', function () {
             return static::HOME_CONTENT;
