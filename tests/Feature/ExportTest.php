@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\Export\Tests\Integration;
+namespace Spatie\Export\Tests\Feature;
 
 use Illuminate\Support\Facades\Route;
 use Orchestra\Testbench\TestCase as BaseTestCase;
@@ -13,13 +13,17 @@ class ExportTest extends BaseTestCase
     protected const ABOUT_CONTENT = 'About';
     protected const FEED_CONTENT = 'Feed';
 
+    protected $distDirectory = __DIR__.DIRECTORY_SEPARATOR.'dist';
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        exec(strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'
-            ? 'del '.__DIR__.'\dist /q'
-            : 'rm -r '.__DIR__.'/dist');
+        if (file_exists($this->distDirectory)) {            
+            exec(strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'
+            ? 'del '.$this->distDirectory.' /q'
+            : 'rm -r '.$this->distDirectory);
+        }
 
         Route::get('/', function () {
             return static::HOME_CONTENT;
@@ -35,7 +39,7 @@ class ExportTest extends BaseTestCase
     }
 
     /** @test */
-    public function it_crawls_and_exports_routes(): void
+    public function it_crawls_and_exports_routes()
     {
         app(Exporter::class)->export();
 
@@ -45,7 +49,7 @@ class ExportTest extends BaseTestCase
     }
 
     /** @test */
-    public function it_exports_paths(): void
+    public function it_exports_paths()
     {
         app(Exporter::class)
             ->crawl(false)
@@ -58,7 +62,7 @@ class ExportTest extends BaseTestCase
     }
 
     /** @test */
-    public function it_exports_urls(): void
+    public function it_exports_urls()
     {
         app(Exporter::class)
             ->crawl(false)
@@ -71,7 +75,7 @@ class ExportTest extends BaseTestCase
     }
 
     /** @test */
-    public function it_exports_mixed(): void
+    public function it_exports_mixed()
     {
         app(Exporter::class)
             ->crawl(false)
@@ -88,7 +92,7 @@ class ExportTest extends BaseTestCase
     public function it_exports_included_files()
     {
         app(Exporter::class)
-            ->includeFiles([__DIR__.'/public' => ''])
+            ->includeFiles([__DIR__.'/../stubs/public' => ''])
             ->export();
 
         static::assertHomeExists();
