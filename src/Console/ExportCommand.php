@@ -26,7 +26,13 @@ class ExportCommand extends Command
             ->unique()
             ->sort()
             ->each(function (string $name) {
-                $description = $name == 'all' ? "Skip all the hooks" : "Skip the {$name} hook(s)";
+
+                if ($name == 'all') {
+                    $description = 'Skip all the hooks';
+                } else {
+                    $description = "Skip the {$name} hook(s)";
+                }
+
                 $this->addOption(
                     "skip-{$name}",
                     null,
@@ -55,7 +61,10 @@ class ExportCommand extends Command
 
     protected function runBeforeHooks()
     {
-        if ($this->input->getOption('skip-all') || $this->input->getOption('skip-before'))
+        if ($this->input->getOption('skip-all'))
+            return;
+
+        if ($this->input->getOption('skip-before'))
             return;
 
         $beforeHooks = collect(config('export.before', []))
@@ -63,7 +72,7 @@ class ExportCommand extends Command
                 return $this->input->getOption("skip-{$name}");
             });
 
-        if (! count($beforeHooks)) {
+        if (!count($beforeHooks)) {
             return;
         }
 
@@ -74,7 +83,10 @@ class ExportCommand extends Command
 
     protected function runAfterHooks()
     {
-        if ($this->input->getOption('skip-all') || $this->input->getOption('skip-after'))
+        if ($this->input->getOption('skip-all'))
+            return;
+
+        if ($this->input->getOption('skip-after'))
             return;
 
         $afterHooks = collect(config('export.after', []))
@@ -82,7 +94,7 @@ class ExportCommand extends Command
                 return $this->input->getOption("skip-{$name}");
             });
 
-        if (! count($afterHooks)) {
+        if (!count($afterHooks)) {
             return;
         }
 
