@@ -26,7 +26,6 @@ class ExportCommand extends Command
             ->unique()
             ->sort()
             ->each(function (string $name) {
-
                 if ($name == 'all') {
                     $description = 'Skip all the hooks';
                 } else {
