@@ -61,18 +61,16 @@ class ExportCommand extends Command
 
     protected function runBeforeHooks()
     {
-        if ($this->input->getOption('skip-all'))
+        if ($this->input->getOption('skip-all') || $this->input->getOption('skip-before')) {
             return;
-
-        if ($this->input->getOption('skip-before'))
-            return;
+        }
 
         $beforeHooks = collect(config('export.before', []))
             ->reject(function (string $hook, string $name) {
                 return $this->input->getOption("skip-{$name}");
             });
 
-        if (!count($beforeHooks)) {
+        if (! count($beforeHooks)) {
             return;
         }
 
@@ -83,18 +81,16 @@ class ExportCommand extends Command
 
     protected function runAfterHooks()
     {
-        if ($this->input->getOption('skip-all'))
+        if ($this->input->getOption('skip-all') || $this->input->getOption('skip-after')) {
             return;
-
-        if ($this->input->getOption('skip-after'))
-            return;
+        }
 
         $afterHooks = collect(config('export.after', []))
             ->reject(function (string $hook, string $name) {
                 return $this->input->getOption("skip-{$name}");
             });
 
-        if (!count($afterHooks)) {
+        if (! count($afterHooks)) {
             return;
         }
 
