@@ -21,17 +21,10 @@ class ExportCommand extends Command
         collect()
             ->merge(config('export.before', []))
             ->merge(config('export.after', []))
-            ->merge(['all' => '', 'before' => '', 'after' => ''])
             ->keys()
             ->unique()
             ->sort()
             ->each(function (string $name) {
-                if ($name == 'all') {
-                    $description = 'Skip all the hooks';
-                } else {
-                    $description = "Skip the {$name} hook(s)";
-                }
-
                 $this->addOption(
                     "skip-{$name}",
                     null,
@@ -39,6 +32,10 @@ class ExportCommand extends Command
                     $description
                 );
             });
+
+        $this->addOption("skip-all", null, InputOption::VALUE_NONE, 'Skip all hooks');
+        $this->addOption("skip-before", null, InputOption::VALUE_NONE, 'Skip all before hooks');
+        $this->addOption("skip-after", null, InputOption::VALUE_NONE, 'Skip all after hooks');
     }
 
     public function handle(Exporter $exporter)
