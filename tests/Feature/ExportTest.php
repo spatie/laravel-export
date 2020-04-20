@@ -102,7 +102,7 @@ class ExportTest extends BaseTestCase
         $this->assertFileExists(__DIR__.'/dist/favicon.ico');
         $this->assertFileExists(__DIR__.'/dist/media/image.png');
 
-        $this->assertFileNotExists(__DIR__.'/dist/index.php');
+        $this->assertFileDoesNotExist(__DIR__.'/dist/index.php');
     }
 
     protected function getPackageProviders($app)
