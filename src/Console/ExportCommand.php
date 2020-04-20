@@ -100,7 +100,11 @@ class ExportCommand extends Command
         foreach ($hooks as $name => $command) {
             $this->comment("[{$name}]", 'v');
 
-            $process = new Process($command);
+            if (method_exists(Process::class, 'fromShellCommandline')) {
+                $process = Process::fromShellCommandline($command);
+            } else {
+                $process = new Process($command);
+            }
 
             $process->mustRun();
 
