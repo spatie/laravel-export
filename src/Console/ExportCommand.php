@@ -29,7 +29,7 @@ class ExportCommand extends Command
                     "skip-{$name}",
                     null,
                     InputOption::VALUE_NONE,
-                    $description
+                    "Skip the {$name} hook"
                 );
             });
 
