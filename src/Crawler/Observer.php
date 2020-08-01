@@ -27,12 +27,9 @@ class Observer extends CrawlObserver
 
     public function crawled(UriInterface $url, ResponseInterface $response, ?UriInterface $foundOnUrl = null)
     {
-        $contents = str_replace($this->entry.'/', '/', (string) $response->getBody());
-        $contents = str_replace($this->entry, '/', $contents);
-
         $this->destination->write(
             $this->normalizePath($url->getPath()),
-            $contents
+            (string) $response->getBody()
         );
     }
 
