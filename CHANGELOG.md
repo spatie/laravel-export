@@ -2,6 +2,11 @@
 
 All notable changes to `laravel-export` will be documented in this file
 
+## 0.3.3 - 2020-08-05
+
+- Broken pages now throw an exception when crawling
+- Internal links aren't normalized anymore when crawling
+
 ## 0.3.2 - 2020-04-20
 
 - Add `--skip-all`, `--skip-before`, and ``--skip-after` command flags
