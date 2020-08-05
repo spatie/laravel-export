@@ -31,13 +31,10 @@ class Observer extends CrawlObserver
         if ($response->getStatusCode() !== 200) {
             throw new RuntimeException("URL [{$url}] returned status code [{$response->getStatusCode()}]");
         }
-
-        $contents = str_replace($this->entry.'/', '/', (string) $response->getBody());
-        $contents = str_replace($this->entry, '/', $contents);
-
+      
         $this->destination->write(
             $this->normalizePath($url->getPath()),
-            $contents
+            (string) $response->getBody()
         );
     }
 
