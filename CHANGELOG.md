@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-export` will be documented in this file
 
+## 0.3.4 - 2020-09-09
+
+- Support Laravel 8
+
 ## 0.3.3 - 2020-08-05
 
 - Broken pages now throw an exception when crawling
