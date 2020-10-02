@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-export` will be documented in this file
 
+## 0.3. 5 - 2020-10-02
+
+- added version "^7.0" for `guzzlehttp/guzzle`
+
 ## 0.3.4 - 2020-09-09
 
 - Support Laravel 8
