@@ -4,6 +4,7 @@ namespace Spatie\Export\Crawler;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise\FulfilledPromise;
+use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Contracts\Http\Kernel as HttpKernel;
 use Illuminate\Http\Request;
 use Nyholm\Psr7\Factory\Psr17Factory;
@@ -29,7 +30,7 @@ class LocalClient extends Client
         $this->psrHttpFactory = new PsrHttpFactory($psr17Factory, $psr17Factory, $psr17Factory, $psr17Factory);
     }
 
-    public function sendAsync(RequestInterface $request, array $options = [])
+    public function sendAsync(RequestInterface $request, array $options = []): PromiseInterface
     {
         $response = $this->kernel->handle(
             Request::create((string) $request->getUri())
