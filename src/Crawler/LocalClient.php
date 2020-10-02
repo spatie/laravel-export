@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\RequestInterface;
 use Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
+use GuzzleHttp\Promise\PromiseInterface;
 
 class LocalClient extends Client
 {
@@ -29,7 +30,7 @@ class LocalClient extends Client
         $this->psrHttpFactory = new PsrHttpFactory($psr17Factory, $psr17Factory, $psr17Factory, $psr17Factory);
     }
 
-    public function sendAsync(RequestInterface $request, array $options = [])
+    public function sendAsync(RequestInterface $request, array $options = []): PromiseInterface
     {
         $response = $this->kernel->handle(
             Request::create((string) $request->getUri())
