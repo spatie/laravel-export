@@ -2,7 +2,11 @@
 
 All notable changes to `laravel-export` will be documented in this file
 
-## 0.3. 5 - 2020-10-02
+## 0.3.7 - 2020-10-24
+
+- update dependencies
+
+## 0.3.6 - 2020-10-02
 
 - added version "^7.0" for `guzzlehttp/guzzle`
 
