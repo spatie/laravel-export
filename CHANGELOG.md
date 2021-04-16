@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-export` will be documented in this file
 
+## 0.3.8 - 2021-04-17
+
+- add $foundOnUrl to output message on exception (#70)
+
 ## 0.3.7 - 2020-10-24
 
 - update dependencies
