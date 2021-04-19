@@ -16,23 +16,34 @@
         }
     ],
     "require": {
-        "php": "^7.2",
-        "guzzlehttp/guzzle": "^6.3 || ^7.0",
-        "illuminate/console": "^6.0 || ^7.0 || ^8.0",
-        "illuminate/contracts": "^6.0 || ^7.0 || ^8.0",
-        "illuminate/http": "^6.0 || ^7.0 || ^8.0",
-        "illuminate/support": "^6.0 || ^7.0 || ^8.0",
+        "php": "^7.3|^7.4|^8.0",
+        "guzzlehttp/guzzle": "^6.3|^7.0",
+        "illuminate/console": "^6.0|^7.0|^8.0",
+        "illuminate/contracts": "^6.0|^7.0|^8.0",
+        "illuminate/http": "^6.0|^7.0|^8.0",
+        "illuminate/support": "^6.0|^7.0|^8.0",
         "nyholm/psr7": "^1.1",
         "psr/http-message": "^1.0",
-        "spatie/crawler": "^4.3",
-        "symfony/console": "^4.2 || ^5.0",
-        "symfony/http-foundation": "^4.2 || ^5.0",
-        "symfony/process": "^4.2 || ^5.0",
+        "spatie/crawler": "^4.7",
+        "symfony/console": "^4.2|^5.0",
+        "symfony/dom-crawler": "^5.2",
+        "symfony/http-foundation": "^4.2|^5.0",
+        "symfony/process": "^5.0",
         "symfony/psr-http-message-bridge": "^2.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^4.0 || ^5.0 || ^6.0",
-        "phpunit/phpunit": "^8.0 || ^9.0"
+        "orchestra/testbench": "^4.0|^5.0|^6.0",
+        "phpunit/phpunit": "^8.0|^9.0"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Spatie\\Export\\ExportServiceProvider"
+            ]
+        }
     },
     "autoload": {
         "psr-4": {
@@ -47,15 +58,5 @@
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Spatie\\Export\\ExportServiceProvider"
-            ]
-        }
     }
 }
