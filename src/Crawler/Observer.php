@@ -6,7 +6,7 @@ use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
 use RuntimeException;
-use Spatie\Crawler\CrawlObserver;
+use Spatie\Crawler\CrawlObservers\CrawlObserver;
 use Spatie\Export\Destination;
 use Spatie\Export\Traits\NormalizedPath;
 
@@ -26,23 +26,23 @@ class Observer extends CrawlObserver
         $this->destination = $destination;
     }
 
-    public function crawled(UriInterface $url, ResponseInterface $response, ?UriInterface $foundOnUrl = null)
+    public function crawled(UriInterface $url, ResponseInterface $response, ?UriInterface $foundOnUrl = null): void
     {
         if ($response->getStatusCode() !== 200) {
             if (! empty($foundOnUrl)) {
                 throw new RuntimeException("URL [{$url}] found on [{$foundOnUrl}] returned status code [{$response->getStatusCode()}]");
             }
-            
+
             throw new RuntimeException("URL [{$url}] returned status code [{$response->getStatusCode()}]");
         }
-      
+
         $this->destination->write(
             $this->normalizePath($url->getPath()),
             (string) $response->getBody()
         );
     }
 
-    public function crawlFailed(UriInterface $url, RequestException $requestException, ?UriInterface $foundOnUrl = null)
+    public function crawlFailed(UriInterface $url, RequestException $requestException, ?UriInterface $foundOnUrl = null): void
     {
         throw $requestException;
     }
