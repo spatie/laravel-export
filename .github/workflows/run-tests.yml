@@ -37,6 +37,10 @@ jobs:
                     extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
                     coverage: none
 
+            -   name: Setup specific Guzzle version
+                run: composer require guzzlehttp/guzzle ^7.0
+                if: ${{ matrix.dependency-version ==  'prefer-lowest' && matrix.php == '8.0'}}
+
             -   name: Install dependencies
                 run: |
                     composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
