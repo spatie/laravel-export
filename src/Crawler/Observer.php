@@ -32,10 +32,10 @@ class Observer extends CrawlObserver
             if (! empty($foundOnUrl)) {
                 throw new RuntimeException("URL [{$url}] found on [{$foundOnUrl}] returned status code [{$response->getStatusCode()}]");
             }
-            
+
             throw new RuntimeException("URL [{$url}] returned status code [{$response->getStatusCode()}]");
         }
-      
+
         $this->destination->write(
             $this->normalizePath($url->getPath()),
             (string) $response->getBody()
