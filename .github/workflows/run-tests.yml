@@ -1,4 +1,4 @@
-name: Run tests
+name: run-tests
 
 on: [push, pull_request]
 
@@ -9,14 +9,12 @@ jobs:
             fail-fast: false
             matrix:
                 os: [ubuntu-latest]
-                php: [8.0, 7.4, 7.3]
-                laravel: [7.*, 8.*]
+                php: [8.1, 8.0]
+                laravel: [^8.73]
                 dependency-version: [prefer-lowest, prefer-stable]
                 include:
-                    -   laravel: 7.*
-                        testbench: 5.*
-                    -   laravel: 8.*
-                        testbench: 6.*
+                    -   laravel: ^8.73
+                        testbench: ^6.23
 
         name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
 
@@ -37,14 +35,10 @@ jobs:
                     extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
                     coverage: none
 
-            -   name: Setup specific Guzzle version
-                run: composer require guzzlehttp/guzzle ^7.0
-                if: ${{ matrix.dependency-version ==  'prefer-lowest' && matrix.php == '8.0'}}
-
             -   name: Install dependencies
                 run: |
                     composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-                    composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
+                    composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
 
             -   name: Execute tests
                 run: vendor/bin/phpunit
