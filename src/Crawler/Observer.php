@@ -25,7 +25,7 @@ class Observer extends CrawlObserver
         $this->entry = $entry;
         $this->destination = $destination;
     }
-    
+
     public function crawled(UriInterface $url, ResponseInterface $response, ?UriInterface $foundOnUrl = null): void
     {
         if ($response->getStatusCode() !== 200) {
