@@ -2,6 +2,11 @@
 
 All notable changes to `laravel-export` will be documented in this file
 
+## 0.3.10 - 2022-02-01
+
+- Add support for PHP 8.1
+- Add support for Laravel 9
+
 ## 0.3.9 - 2021-04-19
 
 - add support for PHP 8
