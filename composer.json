@@ -50,6 +50,8 @@
             "Spatie\\Export\\": "src"
         }
     },
+    "minimum-stability" : "dev",
+    "prefer-stable" : true,
     "autoload-dev": {
         "psr-4": {
             "Spatie\\Export\\Tests\\": "tests"
