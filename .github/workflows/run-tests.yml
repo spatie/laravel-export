@@ -39,7 +39,7 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    composer require "laravel/console:${{ matrix.laravel }}" "laravel/contracts:${{ matrix.laravel }}" "laravel/http:${{ matrix.laravel }}" "laravel/support:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+                    composer require "illuminate/console:${{ matrix.laravel }}" "illuminate/contracts:${{ matrix.laravel }}" "illuminate/http:${{ matrix.laravel }}" "illuminate/support:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
                     composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
 
             -   name: Execute tests
