@@ -1,144 +1,102 @@
 <?php
 
-namespace Spatie\Export\Tests\Feature;
-
 use Illuminate\Support\Facades\Route;
-use Orchestra\Testbench\TestCase as BaseTestCase;
+
 use Spatie\Export\Exporter;
-use Spatie\Export\ExportServiceProvider;
 
-class ExportTest extends BaseTestCase
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertFileExists;
+
+const HOME_CONTENT = '<a href="feed/blog.atom" title="all blogposts">Feed</a>Home <a href="about">About</a>';
+const ABOUT_CONTENT = 'About';
+const FEED_CONTENT = 'Feed';
+
+function assertHomeExists(): void
 {
-    protected const HOME_CONTENT = '<a href="feed/blog.atom" title="all blogposts">Feed</a>Home <a href="about">About</a>';
-    protected const ABOUT_CONTENT = 'About';
-    protected const FEED_CONTENT = 'Feed';
-
-    protected $distDirectory = __DIR__.DIRECTORY_SEPARATOR.'dist';
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        if (file_exists($this->distDirectory)) {
-            exec(strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'
-            ? 'del '.$this->distDirectory.' /q'
-            : 'rm -r '.$this->distDirectory);
-        }
-
-        Route::get('/', function () {
-            return static::HOME_CONTENT;
-        });
-
-        Route::get('about', function () {
-            return static::ABOUT_CONTENT;
-        });
-
-        Route::get('feed/blog.atom', function () {
-            return static::FEED_CONTENT;
-        });
-    }
-
-    /** @test */
-    public function it_crawls_and_exports_routes()
-    {
-        app(Exporter::class)->export();
-
-        static::assertHomeExists();
-        static::assertAboutExists();
-        static::assertFeedBlogAtomExists();
-    }
-
-    /** @test */
-    public function it_exports_paths()
-    {
-        app(Exporter::class)
-            ->crawl(false)
-            ->paths(['/', '/about', '/feed/blog.atom'])
-            ->export();
-
-        static::assertHomeExists();
-        static::assertAboutExists();
-        static::assertFeedBlogAtomExists();
-    }
-
-    /** @test */
-    public function it_exports_urls()
-    {
-        app(Exporter::class)
-            ->crawl(false)
-            ->urls([url('/'), url('/about'), url('/feed/blog.atom')])
-            ->export();
-
-        static::assertHomeExists();
-        static::assertAboutExists();
-        static::assertFeedBlogAtomExists();
-    }
-
-    /** @test */
-    public function it_exports_mixed()
-    {
-        app(Exporter::class)
-            ->crawl(false)
-            ->paths('/')
-            ->urls(url('/about'), url('/feed/blog.atom'))
-            ->export();
-
-        static::assertHomeExists();
-        static::assertAboutExists();
-        static::assertFeedBlogAtomExists();
-    }
-
-    /** @test */
-    public function it_exports_included_files()
-    {
-        app(Exporter::class)
-            ->includeFiles([__DIR__.'/../stubs/public' => ''])
-            ->export();
-
-        static::assertHomeExists();
-        static::assertAboutExists();
-        static::assertFeedBlogAtomExists();
-
-        $this->assertFileExists(__DIR__.'/dist/favicon.ico');
-        $this->assertFileExists(__DIR__.'/dist/media/image.png');
-
-        $this->assertFalse(file_exists(__DIR__.'/dist/index.php'));
-    }
-
-    protected function getPackageProviders($app)
-    {
-        return [ExportServiceProvider::class];
-    }
-
-    protected function getEnvironmentSetUp($app)
-    {
-        $app['config']->set('filesystems.disks.export', [
-            'driver' => 'local',
-            'root' => __DIR__.'/dist',
-        ]);
-
-        $app['config']->set('export.disk', 'export');
-        $app['config']->set('export.include_files', []);
-    }
-
-    protected static function assertHomeExists(): void
-    {
-        static::assertExportedFile(__DIR__.'/dist/index.html', static::HOME_CONTENT);
-    }
-
-    protected static function assertAboutExists(): void
-    {
-        static::assertExportedFile(__DIR__.'/dist/about/index.html', static::ABOUT_CONTENT);
-    }
-
-    protected static function assertFeedBlogAtomExists(): void
-    {
-        static::assertExportedFile(__DIR__.'/dist/feed/blog.atom', static::FEED_CONTENT);
-    }
-
-    protected static function assertExportedFile(string $path, string $content): void
-    {
-        static::assertFileExists($path);
-        static::assertEquals($content, file_get_contents($path));
-    }
+    assertExportedFile(__DIR__ . '/dist/index.html', HOME_CONTENT);
 }
+
+function assertAboutExists(): void
+{
+    assertExportedFile(__DIR__ . '/dist/about/index.html', ABOUT_CONTENT);
+}
+
+function assertFeedBlogAtomExists(): void
+{
+    assertExportedFile(__DIR__ . '/dist/feed/blog.atom', FEED_CONTENT);
+}
+
+function assertExportedFile(string $path, string $content): void
+{
+    assertFileExists($path);
+    assertEquals($content, file_get_contents($path));
+}
+
+beforeEach(function () {
+    $this->distDirectory = __DIR__ . DIRECTORY_SEPARATOR . 'dist';
+
+    if (file_exists($this->distDirectory)) {
+        exec(strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'
+            ? 'del ' . $this->distDirectory . ' /q'
+            : 'rm -r ' . $this->distDirectory);
+    }
+
+    Route::get('/', function () {
+        return HOME_CONTENT;
+    });
+
+    Route::get('about', function () {
+        return ABOUT_CONTENT;
+    });
+
+    Route::get('feed/blog.atom', function () {
+        return FEED_CONTENT;
+    });
+});
+
+afterEach(function () {
+    assertHomeExists();
+    assertAboutExists();
+    assertFeedBlogAtomExists();
+});
+
+it('crawls and exports routes', function () {
+    app(Exporter::class)->export();
+
+    assertHomeExists();
+    assertAboutExists();
+    assertFeedBlogAtomExists();
+});
+
+it('exports paths', function () {
+    app(Exporter::class)
+        ->crawl(false)
+        ->paths(['/', '/about', '/feed/blog.atom'])
+        ->export();
+});
+
+it('exports urls', function () {
+    app(Exporter::class)
+        ->crawl(false)
+        ->urls([url('/'), url('/about'), url('/feed/blog.atom')])
+        ->export();
+});
+
+it('exports mixed', function () {
+    app(Exporter::class)
+        ->crawl(false)
+        ->paths('/')
+        ->urls(url('/about'), url('/feed/blog.atom'))
+        ->export();
+});
+
+it('exports included files', function () {
+    app(Exporter::class)
+        ->includeFiles([__DIR__ . '/../stubs/public' => ''])
+        ->export();
+
+    assertFileExists(__DIR__ . '/dist/favicon.ico');
+    assertFileExists(__DIR__ . '/dist/media/image.png');
+
+    expect(file_exists(__DIR__ . '/dist/index.php'))->toBeFalse();
+});
