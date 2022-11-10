@@ -62,10 +62,6 @@ afterEach(function () {
 
 it('crawls and exports routes', function () {
     app(Exporter::class)->export();
-
-    assertHomeExists();
-    assertAboutExists();
-    assertFeedBlogAtomExists();
 });
 
 it('exports paths', function () {
