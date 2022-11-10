@@ -54,15 +54,15 @@
             "Spatie\\Export\\": "src"
         }
     },
-    "minimum-stability" : "dev",
-    "prefer-stable" : true,
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload-dev": {
         "psr-4": {
             "Spatie\\Export\\Tests\\": "tests"
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage-html coverage"
     }
 }
