@@ -2,10 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
-use Spatie\Export\Exporter;
-
 use function PHPUnit\Framework\assertEquals;
+
 use function PHPUnit\Framework\assertFileExists;
+
+use Spatie\Export\Exporter;
 
 const HOME_CONTENT = '<a href="feed/blog.atom" title="all blogposts">Feed</a>Home <a href="about">About</a>';
 const ABOUT_CONTENT = 'About';
