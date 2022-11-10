@@ -92,7 +92,7 @@ it('exports mixed', function () {
 
 it('exports included files', function () {
     app(Exporter::class)
-        ->includeFiles([__DIR__ . '/../stubs/public' => ''])
+        ->includeFiles([__DIR__ . '/stubs/public' => ''])
         ->export();
 
     assertFileExists(__DIR__ . '/dist/favicon.ico');
