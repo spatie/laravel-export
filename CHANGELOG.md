@@ -2,6 +2,12 @@
 
 All notable changes to `laravel-export` will be documented in this file
 
+## 0.3.11 - 2023-02-10
+
+- Add support for PHP 8.2
+- Add support for Laravel 10
+- Refactor tests to Pest
+
 ## 0.3.10 - 2022-02-01
 
 - Add support for PHP 8.1
