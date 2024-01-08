@@ -32,9 +32,11 @@ class LocalClient extends Client
 
     public function sendAsync(RequestInterface $request, array $options = []): PromiseInterface
     {
-        $response = $this->kernel->handle(
-            Request::create((string) $request->getUri())
-        );
+        $localRequest = Request::create((string) $request->getUri());
+
+        $localRequest->headers->set('X-Laravel-Export', 'true');
+
+        $response = $this->kernel->handle($localRequest);
 
         $psrResponse = $this->psrHttpFactory->createResponse($response);
 
