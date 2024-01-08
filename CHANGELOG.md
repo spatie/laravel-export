@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-export` will be documented in this file
 
+## 1.0.0 - 2024-01-08
+
+### What's Changed
+
+* Add X-Laravel-Export header by @aguingand in https://github.com/spatie/laravel-export/pull/110
+
+### New Contributors
+
+* @aguingand made their first contribution in https://github.com/spatie/laravel-export/pull/110
+
+**Full Changelog**: https://github.com/spatie/laravel-export/compare/0.3.11...1.0.0
+
 ## 0.3.11 - 2023-02-10
 
 - Add support for PHP 8.2
