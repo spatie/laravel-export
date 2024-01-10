@@ -26,7 +26,7 @@ class Observer extends CrawlObserver
         $this->destination = $destination;
     }
 
-    public function crawled(UriInterface $url, ResponseInterface $response, ?UriInterface $foundOnUrl = null): void
+    public function crawled(UriInterface $url, ResponseInterface $response, ?UriInterface $foundOnUrl = null, ?string $linkText = null): void
     {
         if ($response->getStatusCode() !== 200) {
             if (! empty($foundOnUrl)) {
@@ -42,7 +42,7 @@ class Observer extends CrawlObserver
         );
     }
 
-    public function crawlFailed(UriInterface $url, RequestException $requestException, ?UriInterface $foundOnUrl = null): void
+    public function crawlFailed(UriInterface $url, RequestException $requestException, ?UriInterface $foundOnUrl = null, ?string $linkText = null): void
     {
         throw $requestException;
     }

@@ -11,7 +11,7 @@ use Spatie\Export\Destination;
 
 class CrawlSite
 {
-    public function handle(UrlGenerator $urlGenerator, Destination $destination)
+    public function handle(UrlGenerator $urlGenerator, Destination $destination): void
     {
         $entry = $urlGenerator->to('/');
 
