@@ -17,7 +17,7 @@ A few example use cases for this package:
 
 - Build your own blog or site in Laravel with all the tools you're used to using. Export a static version and just upload it anywhere for hosting, no need for managing a full-blown server anymore.
 
-- Use something like [Nova](https://nova.laravel.com/), [Wink](https://wink.themsaid.com/), or any other admin panel to manage your site locally or on a remote server, then publish it to a service like Netlify. This gives you all benefits of a static site (speed, simple hosting, scalability) while still having a dynamic backend of some sort.
+- Use something like [Nova](https://nova.laravel.com/), [Wink](https://github.com/themsaid/wink), [Filament](https://filamentphp.com/), [Sharp](https://sharp.code16.fr/), or any other admin panel to manage your site locally or on a remote server, then publish it to a service like Netlify. This gives you all benefits of a static site (speed, simple hosting, scalability) while still having a dynamic backend of some sort.
 
 ## Support us
 
