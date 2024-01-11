@@ -2,6 +2,20 @@
 
 All notable changes to `laravel-export` will be documented in this file
 
+## 1.0.1 - 2024-01-11
+
+### What's Changed
+
+* fix wink url + suggest more alternatives by @smknstd in https://github.com/spatie/laravel-export/pull/111
+* Bumped composer packages by @boydbloemsma in https://github.com/spatie/laravel-export/pull/112
+
+### New Contributors
+
+* @smknstd made their first contribution in https://github.com/spatie/laravel-export/pull/111
+* @boydbloemsma made their first contribution in https://github.com/spatie/laravel-export/pull/112
+
+**Full Changelog**: https://github.com/spatie/laravel-export/compare/1.0.0...1.0.1
+
 ## 1.0.0 - 2024-01-08
 
 ### What's Changed
