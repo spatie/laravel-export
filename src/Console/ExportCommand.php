@@ -33,9 +33,9 @@ class ExportCommand extends Command
                 );
             });
 
-        $this->addOption("skip-all", null, InputOption::VALUE_NONE, 'Skip all hooks');
-        $this->addOption("skip-before", null, InputOption::VALUE_NONE, 'Skip all before hooks');
-        $this->addOption("skip-after", null, InputOption::VALUE_NONE, 'Skip all after hooks');
+        $this->addOption('skip-all', null, InputOption::VALUE_NONE, 'Skip all hooks');
+        $this->addOption('skip-before', null, InputOption::VALUE_NONE, 'Skip all before hooks');
+        $this->addOption('skip-after', null, InputOption::VALUE_NONE, 'Skip all after hooks');
     }
 
     public function handle(Exporter $exporter)

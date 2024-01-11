@@ -16,7 +16,7 @@ class TestCase extends BaseTestCase
     {
         $app['config']->set('filesystems.disks.export', [
             'driver' => 'local',
-            'root' => __DIR__ . '/dist',
+            'root' => __DIR__.'/dist',
         ]);
 
         $app['config']->set('export.disk', 'export');
