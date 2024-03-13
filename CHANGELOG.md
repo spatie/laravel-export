@@ -2,6 +2,19 @@
 
 All notable changes to `laravel-export` will be documented in this file
 
+## 1.1.0 - 2024-03-13
+
+### What's Changed
+
+* Bump actions/cache from 3 to 4 by @dependabot in https://github.com/spatie/laravel-export/pull/113
+* Add support for Laravel 11 by @olssonm in https://github.com/spatie/laravel-export/pull/115
+
+### New Contributors
+
+* @olssonm made their first contribution in https://github.com/spatie/laravel-export/pull/115
+
+**Full Changelog**: https://github.com/spatie/laravel-export/compare/1.0.1...1.1.0
+
 ## 1.0.1 - 2024-01-11
 
 ### What's Changed
