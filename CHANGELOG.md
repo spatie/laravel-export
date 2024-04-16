@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-export` will be documented in this file
 
+## 1.1.1 - 2024-04-16
+
+### What's Changed
+
+* Bump aglipanci/laravel-pint-action from 2.3.1 to 2.4 by @dependabot in https://github.com/spatie/laravel-export/pull/121
+* Add X-Laravel-Export header to request on export path by @aguingand in https://github.com/spatie/laravel-export/pull/120
+
+**Full Changelog**: https://github.com/spatie/laravel-export/compare/1.1.0...1.1.1
+
 ## 1.1.0 - 2024-03-13
 
 ### What's Changed
