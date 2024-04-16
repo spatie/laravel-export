@@ -23,9 +23,11 @@ class ExportPath
 
     public function handle(Kernel $kernel, Destination $destination, UrlGenerator $urlGenerator)
     {
-        $response = $kernel->handle(
-            Request::create($urlGenerator->to($this->path))
-        );
+        $localRequest = Request::create($urlGenerator->to($this->path));
+
+        $localRequest->headers->set('X-Laravel-Export', 'true');
+
+        $response = $kernel->handle($localRequest);
 
         if ($response->status() !== 200) {
             throw new RuntimeException("Path [{$this->path}] returned status code [{$response->status()}]");

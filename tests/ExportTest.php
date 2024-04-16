@@ -31,6 +31,11 @@ function assertExportedFile(string $path, string $content): void
     assertEquals($content, file_get_contents($path));
 }
 
+function assertRequestsHasHeader(): void
+{
+    expect(Route::getCurrentRequest()->header('X-Laravel-Export'))->toEqual('true');
+}
+
 beforeEach(function () {
     $this->distDirectory = __DIR__.DIRECTORY_SEPARATOR.'dist';
 
@@ -57,6 +62,7 @@ afterEach(function () {
     assertHomeExists();
     assertAboutExists();
     assertFeedBlogAtomExists();
+    assertRequestsHasHeader();
 });
 
 it('crawls and exports routes', function () {
