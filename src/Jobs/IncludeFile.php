@@ -55,11 +55,11 @@ class IncludeFile
         );
 
         foreach ($iterator as $item) {
-            if ($item->isDir()) {
+            if ($item->isDir() && !$item->isLink()) {
                 continue;
             }
 
-            // Checkin isDir() on $item could lead to false negatives due to the way
+            // Checking isDir() and isLink() on $item could lead to false negatives due to the way
             // symlinks are handled on Windows, especially if created under Git-For-Windows.
             // When debugging it could lead to isDir(), isFile() and isLink() to all 3 be false.
             // Despite that, getRealPath() does return the resolved symlink path.
