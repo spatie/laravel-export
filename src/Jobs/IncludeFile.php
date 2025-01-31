@@ -55,6 +55,8 @@ class IncludeFile
         );
 
         foreach ($iterator as $item) {
+            // No checking for isLink() would result in the contents of symlink'd directories
+            // to not be exported on UNIX machines, and the symlink itself to be excluded.
             if ($item->isDir() && !$item->isLink()) {
                 continue;
             }
