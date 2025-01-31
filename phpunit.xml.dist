@@ -3,6 +3,7 @@
   <testsuites>
     <testsuite name="Spatie Test Suite">
       <directory>tests</directory>
+      <directory suffix=".test.php">tests</directory>
     </testsuite>
   </testsuites>
   <logging>
