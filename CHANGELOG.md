@@ -2,6 +2,21 @@
 
 All notable changes to `laravel-export` will be documented in this file
 
+## 1.1.2 - 2025-02-20
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 1.6.0 to 2.2.0 by @dependabot in https://github.com/spatie/laravel-export/pull/123
+* Bump dependabot/fetch-metadata from 2.2.0 to 2.3.0 by @dependabot in https://github.com/spatie/laravel-export/pull/126
+* Bump aglipanci/laravel-pint-action from 2.4 to 2.5 by @dependabot in https://github.com/spatie/laravel-export/pull/128
+* Laravel 12.x Compatibility by @laravel-shift in https://github.com/spatie/laravel-export/pull/129
+
+### New Contributors
+
+* @laravel-shift made their first contribution in https://github.com/spatie/laravel-export/pull/129
+
+**Full Changelog**: https://github.com/spatie/laravel-export/compare/1.1.1...1.1.2
+
 ## 1.1.1 - 2024-04-16
 
 ### What's Changed
