@@ -18,10 +18,10 @@
     "require": {
         "php": "^8.2",
         "guzzlehttp/guzzle": "^7.8.1",
-        "illuminate/console": "^10.0|^11.0",
-        "illuminate/contracts": "^10.0|^11.0",
-        "illuminate/http": "^10.0|^11.0",
-        "illuminate/support": "^10.0|^11.0",
+        "illuminate/console": "^10.0|^11.0|^12.0",
+        "illuminate/contracts": "^10.0|^11.0|^12.0",
+        "illuminate/http": "^10.0|^11.0|^12.0",
+        "illuminate/support": "^10.0|^11.0|^12.0",
         "nyholm/psr7": "^1.8.1",
         "psr/http-message": "^2.0",
         "spatie/crawler": "^8.1",
@@ -32,9 +32,9 @@
         "symfony/psr-http-message-bridge": ">=2.3.1"
     },
     "require-dev": {
-        "orchestra/testbench": "^8.20|^9.0",
-        "pestphp/pest": "^2.30",
-        "pestphp/pest-plugin-laravel": "^2"
+        "orchestra/testbench": "^8.20|^9.0|^10.0",
+        "pestphp/pest": "^2.30|^3.7",
+        "pestphp/pest-plugin-laravel": "^2|^3.1"
     },
     "config": {
         "sort-packages": true,
