@@ -28,7 +28,8 @@ class Observer extends CrawlObserver
 
     public function crawled(UriInterface $url, ResponseInterface $response, ?UriInterface $foundOnUrl = null, ?string $linkText = null): void
     {
-        if ($response->getStatusCode() !== 200) {
+        // Allow all success status codes and redirect codes
+        if ($response->getStatusCode() < 200 || $response->getStatusCode() > 399) {
             if (! empty($foundOnUrl)) {
                 throw new RuntimeException("URL [{$url}] found on [{$foundOnUrl}] returned status code [{$response->getStatusCode()}]");
             }
