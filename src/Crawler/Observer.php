@@ -28,7 +28,7 @@ class Observer extends CrawlObserver
 
     public function crawled(UriInterface $url, ResponseInterface $response, ?UriInterface $foundOnUrl = null, ?string $linkText = null): void
     {
-        if ($response->getStatusCode() !== 200) {
+        if (! $this->isSuccesfullOrRedirect($response->getStatusCode())) {
             if (! empty($foundOnUrl)) {
                 throw new RuntimeException("URL [{$url}] found on [{$foundOnUrl}] returned status code [{$response->getStatusCode()}]");
             }
@@ -45,5 +45,10 @@ class Observer extends CrawlObserver
     public function crawlFailed(UriInterface $url, RequestException $requestException, ?UriInterface $foundOnUrl = null, ?string $linkText = null): void
     {
         throw $requestException;
+    }
+
+    protected function isSuccesfullOrRedirect(int $statusCode): bool
+    {
+        return in_array($statusCode, [200,301,302]);
     }
 }
