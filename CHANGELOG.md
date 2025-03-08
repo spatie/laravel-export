@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-export` will be documented in this file
 
+## 1.2.0 - 2025-03-08
+
+### What's Changed
+
+* Allow redirects export by @plakhin in https://github.com/spatie/laravel-export/pull/131
+
+### New Contributors
+
+* @plakhin made their first contribution in https://github.com/spatie/laravel-export/pull/131
+
+**Full Changelog**: https://github.com/spatie/laravel-export/compare/1.1.2...1.2.0
+
 ## 1.1.2 - 2025-02-20
 
 ### What's Changed
