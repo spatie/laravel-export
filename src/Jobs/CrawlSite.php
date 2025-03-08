@@ -15,7 +15,7 @@ class CrawlSite
     {
         $entry = $urlGenerator->to('/');
 
-        (new Crawler(new LocalClient()))
+        (new Crawler(new LocalClient))
             ->setCrawlObserver(new Observer($entry, $destination))
             ->setCrawlProfile(new CrawlInternalUrls($entry))
             ->startCrawling($entry);

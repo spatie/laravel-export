@@ -49,6 +49,6 @@ class Observer extends CrawlObserver
 
     protected function isSuccesfullOrRedirect(int $statusCode): bool
     {
-        return in_array($statusCode, [200,301,302]);
+        return in_array($statusCode, [200, 301, 302]);
     }
 }

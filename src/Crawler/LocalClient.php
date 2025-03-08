@@ -25,7 +25,7 @@ class LocalClient extends Client
 
         $this->kernel = app(HttpKernel::class);
 
-        $psr17Factory = new Psr17Factory();
+        $psr17Factory = new Psr17Factory;
 
         $this->psrHttpFactory = new PsrHttpFactory($psr17Factory, $psr17Factory, $psr17Factory, $psr17Factory);
     }

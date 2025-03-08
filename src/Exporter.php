@@ -91,13 +91,13 @@ class Exporter
     {
         if ($this->cleanBeforeExport) {
             $this->dispatcher->dispatchNow(
-                new CleanDestination()
+                new CleanDestination
             );
         }
 
         if ($this->crawl) {
             $this->dispatcher->dispatchNow(
-                new CrawlSite()
+                new CrawlSite
             );
         }
 
