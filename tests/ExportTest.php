@@ -6,9 +6,31 @@ use Spatie\Export\Exporter;
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertFileExists;
 
-const HOME_CONTENT = '<a href="feed/blog.atom" title="all blogposts">Feed</a>Home <a href="about">About</a>';
+const HOME_CONTENT = <<<'HTML'
+    <a href="feed/blog.atom" title="all blogposts">Feed</a>
+    Home
+    <a href="about">About</a>
+    <a href="redirect">Spatie</a>
+HTML;
+
 const ABOUT_CONTENT = 'About';
+
 const FEED_CONTENT = 'Feed';
+
+const REDIRECT_CONTENT = <<<'HTML'
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="refresh" content="0;url='https://spatie.be'" />
+
+        <title>Redirecting to https://spatie.be</title>
+    </head>
+    <body>
+        Redirecting to <a href="https://spatie.be">https://spatie.be</a>.
+    </body>
+</html>
+HTML;
 
 function assertHomeExists(): void
 {
@@ -23,6 +45,11 @@ function assertAboutExists(): void
 function assertFeedBlogAtomExists(): void
 {
     assertExportedFile(__DIR__.'/dist/feed/blog.atom', FEED_CONTENT);
+}
+
+function assertRedirectExists(): void
+{
+    assertExportedFile(__DIR__.'/dist/redirect/index.html', REDIRECT_CONTENT);
 }
 
 function assertExportedFile(string $path, string $content): void
@@ -56,12 +83,15 @@ beforeEach(function () {
     Route::get('feed/blog.atom', function () {
         return FEED_CONTENT;
     });
+
+    Route::redirect('redirect', 'https://spatie.be');
 });
 
 afterEach(function () {
     assertHomeExists();
     assertAboutExists();
     assertFeedBlogAtomExists();
+    assertRedirectExists();
     assertRequestsHasHeader();
 });
 
@@ -72,14 +102,14 @@ it('crawls and exports routes', function () {
 it('exports paths', function () {
     app(Exporter::class)
         ->crawl(false)
-        ->paths(['/', '/about', '/feed/blog.atom'])
+        ->paths(['/', '/about', '/feed/blog.atom', '/redirect'])
         ->export();
 });
 
 it('exports urls', function () {
     app(Exporter::class)
         ->crawl(false)
-        ->urls([url('/'), url('/about'), url('/feed/blog.atom')])
+        ->urls([url('/'), url('/about'), url('/feed/blog.atom'), url('/redirect')])
         ->export();
 });
 
@@ -87,7 +117,7 @@ it('exports mixed', function () {
     app(Exporter::class)
         ->crawl(false)
         ->paths('/')
-        ->urls(url('/about'), url('/feed/blog.atom'))
+        ->urls(url('/about'), url('/feed/blog.atom'), url('/redirect'))
         ->export();
 });
 

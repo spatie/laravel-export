@@ -29,10 +29,15 @@ class ExportPath
 
         $response = $kernel->handle($localRequest);
 
-        if ($response->status() !== 200) {
+        if (! $this->isSuccesfullOrRedirect($response->status())) {
             throw new RuntimeException("Path [{$this->path}] returned status code [{$response->status()}]");
         }
 
         $destination->write($this->normalizePath($this->path), $response->content());
+    }
+
+    protected function isSuccesfullOrRedirect(int $status): bool
+    {
+        return in_array($status, [200,301,302]);
     }
 }
