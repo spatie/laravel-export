@@ -38,6 +38,6 @@ class ExportPath
 
     protected function isSuccesfullOrRedirect(int $status): bool
     {
-        return in_array($status, [200, 301, 302]);
+        return in_array($status, [200, 301, 302, 404]);
     }
 }
