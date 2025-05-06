@@ -12,7 +12,7 @@ class ExportCommand extends Command
 {
     protected $name = 'export';
 
-    protected $description = 'Export the entire app to a static site22';
+    protected $description = 'Export the entire app to a static site';
 
     public function __construct()
     {
