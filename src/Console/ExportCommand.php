@@ -12,7 +12,7 @@ class ExportCommand extends Command
 {
     protected $name = 'export';
 
-    protected $description = 'Export the entire app to a static site';
+    protected $description = 'Export the entire app to a static site22';
 
     public function __construct()
     {
@@ -36,6 +36,8 @@ class ExportCommand extends Command
         $this->addOption('skip-all', null, InputOption::VALUE_NONE, 'Skip all hooks');
         $this->addOption('skip-before', null, InputOption::VALUE_NONE, 'Skip all before hooks');
         $this->addOption('skip-after', null, InputOption::VALUE_NONE, 'Skip all after hooks');
+        $this->addOption('sitemap', null, InputOption::VALUE_NONE, 'Generate a sitemap.xml after export');
+
     }
 
     public function handle(Exporter $exporter)
@@ -44,10 +46,15 @@ class ExportCommand extends Command
 
         $this->info('Exporting site...');
 
-        $exporter->export();
+        $sitemap = $this->option('sitemap');
+
+        if ($sitemap) {
+            $this->info('Generating sitemap...');
+        }
+        $exporter->export($sitemap);
 
         if (config('export.disk')) {
-            $this->info('Files were saved to disk `'.config('export.disk').'`');
+            $this->info('Files were saved to disk `' . config('export.disk') . '`');
         } else {
             $this->info('Files were saved to `dist`');
         }
@@ -66,7 +73,7 @@ class ExportCommand extends Command
                 return $this->input->getOption("skip-{$name}");
             });
 
-        if (! count($beforeHooks)) {
+        if (!count($beforeHooks)) {
             return;
         }
 
@@ -86,7 +93,7 @@ class ExportCommand extends Command
                 return $this->input->getOption("skip-{$name}");
             });
 
-        if (! count($afterHooks)) {
+        if (!count($afterHooks)) {
             return;
         }
 

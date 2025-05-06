@@ -24,6 +24,9 @@ class Exporter
     /** @var bool */
     protected $crawl = false;
 
+    /** @var bool */
+    protected $sitemap = true;
+
     /** @var string[] */
     protected $paths = [];
 
@@ -42,6 +45,12 @@ class Exporter
     public function cleanBeforeExport(bool $cleanBeforeExport): self
     {
         $this->cleanBeforeExport = $cleanBeforeExport;
+
+        return $this;
+    }
+    public function sitemap(bool $sitemap): self
+    {
+        $this->sitemap = $sitemap;
 
         return $this;
     }
@@ -87,8 +96,9 @@ class Exporter
         return $this;
     }
 
-    public function export()
+    public function export(bool $sitemapOption = true): void
     {
+        $includeSitemap = $this->sitemap || $sitemapOption;
         if ($this->cleanBeforeExport) {
             $this->dispatcher->dispatchNow(
                 new CleanDestination
@@ -96,8 +106,16 @@ class Exporter
         }
 
         if ($this->crawl) {
+
             $this->dispatcher->dispatchNow(
-                new CrawlSite
+                new CrawlSite($includeSitemap)
+            );
+
+        }
+
+        if (($includeSitemap && $this->paths) && !$this->crawl) {
+            $this->dispatcher->dispatchNow(
+                new SitemapGenerator($this->paths)
             );
         }
 

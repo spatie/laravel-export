@@ -15,9 +15,9 @@ Laravel Export will scan your app and create an HTML page from every URL it craw
 
 A few example use cases for this package:
 
-- Build your own blog or site in Laravel with all the tools you're used to using. Export a static version and just upload it anywhere for hosting, no need for managing a full-blown server anymore.
+-   Build your own blog or site in Laravel with all the tools you're used to using. Export a static version and just upload it anywhere for hosting, no need for managing a full-blown server anymore.
 
-- Use something like [Nova](https://nova.laravel.com/), [Wink](https://github.com/themsaid/wink), [Filament](https://filamentphp.com/), [Sharp](https://sharp.code16.fr/), or any other admin panel to manage your site locally or on a remote server, then publish it to a service like Netlify. This gives you all benefits of a static site (speed, simple hosting, scalability) while still having a dynamic backend of some sort.
+-   Use something like [Nova](https://nova.laravel.com/), [Wink](https://github.com/themsaid/wink), [Filament](https://filamentphp.com/), [Sharp](https://sharp.code16.fr/), or any other admin panel to manage your site locally or on a remote server, then publish it to a service like Netlify. This gives you all benefits of a static site (speed, simple hosting, scalability) while still having a dynamic backend of some sort.
 
 ## Support us
 
@@ -102,6 +102,20 @@ return [
     ],
 ];
 ```
+
+#### Sitemap Generation
+
+By default, Laravel Export can generate a sitemap.xml file during the export process. This helps search engines index your static site correctly.
+
+Enable or disable this behavior using the sitemap option in the config/export.php file:
+
+```php
+return [
+    'sitemap' => true, // Set to false if you do not want a sitemap generated.
+];
+```
+
+This will automatically create a sitemap.xml file and place it at the root of your exported site directory, containing all the crawled and manually included paths.
 
 #### Configuration through code
 
@@ -188,6 +202,16 @@ php artisan export --skip-after
 php artisan export --skip-all
 ```
 
+#### Sitemap
+
+You can also control this feature using the CLI when running the export command.
+
+```bash
+php artisan export --sitemap
+```
+
+This flag will override the config setting and force sitemap generation, even if the config says otherwise.
+
 ## Usage
 
 To build a bundle, run the `export` command:
@@ -198,7 +222,7 @@ php artisan export
 
 ## Testing
 
-``` bash
+```bash
 composer test
 ```
 
@@ -224,8 +248,8 @@ We publish all received postcards [on our company website](https://spatie.be/en/
 
 ## Credits
 
-- [Sebastian De Deyne](https://github.com/sebastiandedeyne)
-- [All Contributors](../../contributors)
+-   [Sebastian De Deyne](https://github.com/sebastiandedeyne)
+-   [All Contributors](../../contributors)
 
 ## License
 

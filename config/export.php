@@ -69,4 +69,9 @@ return [
         // 'deploy' => '/usr/local/bin/netlify deploy --prod',
     ],
 
+    /*
+     * If true, the exporter will generate a sitemap.xml after export.
+     */
+    'sitemap' => true,
+
 ];

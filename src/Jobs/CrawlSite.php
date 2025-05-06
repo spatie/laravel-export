@@ -11,12 +11,20 @@ use Spatie\Export\Destination;
 
 class CrawlSite
 {
+    /** @var bool */
+    protected $sitemap;
+
+    public function __construct(bool $sitemap)
+    {
+        $this->sitemap = $sitemap;
+    }
+
     public function handle(UrlGenerator $urlGenerator, Destination $destination): void
     {
         $entry = $urlGenerator->to('/');
 
-        (new Crawler(new LocalClient))
-            ->setCrawlObserver(new Observer($entry, $destination))
+        $crawler = (new Crawler(new LocalClient))
+            ->setCrawlObserver(new Observer($entry, $destination, $this->sitemap))
             ->setCrawlProfile(new CrawlInternalUrls($entry))
             ->startCrawling($entry);
     }
