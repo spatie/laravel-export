@@ -29,7 +29,7 @@
         "symfony/dom-crawler": "^6.0||^7.0 || ^8.0",
         "symfony/http-foundation": "^6.4.2||^7.0 || ^8.0",
         "symfony/process": "^6.4.2||^7.0 || ^8.0",
-        "symfony/psr-http-message-bridge": ">=2.3.1 || ^6.0 || ^7.0 || ^8.0"
+        "symfony/psr-http-message-bridge": ">=2.3.1"
     },
     "require-dev": {
         "orchestra/testbench": "^8.20|^9.0|^10.0",
