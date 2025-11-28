@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-export` will be documented in this file
 
+## 1.2.2 - 2025-11-28
+
+### What's Changed
+
+* Update issue template by @AlexVanderbist in https://github.com/spatie/laravel-export/pull/140
+
+### New Contributors
+
+* @AlexVanderbist made their first contribution in https://github.com/spatie/laravel-export/pull/140
+
+**Full Changelog**: https://github.com/spatie/laravel-export/compare/1.2.1...1.2.2
+
 ## 1.2.1 - 2025-08-18
 
 ### What's Changed
