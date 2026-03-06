@@ -2,6 +2,12 @@
 
 All notable changes to `laravel-export` will be documented in this file
 
+## 1.3.0 - 2026-03-06
+
+### What's Changed
+
+- Laravel 13.x Compatibility
+
 ## 1.2.2 - 2025-11-28
 
 ### What's Changed
