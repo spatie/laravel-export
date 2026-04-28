@@ -3,9 +3,12 @@
 namespace Spatie\Export\Crawler;
 
 use GuzzleHttp\Exception\RequestException;
+use RuntimeException;
+use Spatie\Crawler\CrawlObservers\CrawlObserver;
 use Spatie\Crawler\CrawlProgress;
 use Spatie\Crawler\CrawlResponse;
-use Spatie\Crawler\CrawlObservers\CrawlObserver;
+use Spatie\Crawler\Enums\ResourceType;
+use Spatie\Crawler\TransferStatistics;
 use Spatie\Export\Destination;
 use Spatie\Export\Traits\NormalizedPath;
 
@@ -31,10 +34,10 @@ class Observer extends CrawlObserver
             $foundOnUrl = $response->foundOnUrl();
 
             if (! empty($foundOnUrl)) {
-                throw new \RuntimeException("URL [{$url}] found on [{$foundOnUrl}] returned status code [{$response->status()}]");
+                throw new RuntimeException("URL [{$url}] found on [{$foundOnUrl}] returned status code [{$response->status()}]");
             }
 
-            throw new \RuntimeException("URL [{$url}] returned status code [{$response->status()}]");
+            throw new RuntimeException("URL [{$url}] returned status code [{$response->status()}]");
         }
 
         $this->destination->write(
@@ -49,10 +52,9 @@ class Observer extends CrawlObserver
         CrawlProgress $progress,
         ?string $foundOnUrl = null,
         ?string $linkText = null,
-        ?\Spatie\Crawler\Enums\ResourceType $resourceType = null,
-        ?\Spatie\Crawler\TransferStatistics $transferStats = null,
+        ?ResourceType $resourceType = null,
+        ?TransferStatistics $transferStats = null,
     ): void {
         throw $requestException;
     }
-
 }
