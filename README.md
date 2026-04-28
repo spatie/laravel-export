@@ -67,7 +67,7 @@ return [
 ];
 ```
 
-By default, the crawler will use streaming to reduce memory usage. This is especially useful for large sites. You can disable this with the `use_streaming` option. This option only makes sense when the `crawl` option is enabled.
+By default, streaming is disabled. Enable the `use_streaming` option to reduce memory usage when crawling large sites. This option only makes sense when the `crawl` option is enabled.
 
 ```php
 return [

@@ -113,7 +113,7 @@ it('crawls and exports routes', function () {
 });
 
 it('crawls and exports routes while using streaming', function () {
-   app(Exporter::class)
+    app(Exporter::class)
         ->crawl(true)
         ->useStreaming(true)
         ->export();
