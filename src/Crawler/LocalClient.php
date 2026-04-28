@@ -2,7 +2,6 @@
 
 namespace Spatie\Export\Crawler;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Contracts\Http\Kernel as HttpKernel;
