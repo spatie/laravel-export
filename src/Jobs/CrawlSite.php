@@ -20,6 +20,11 @@ class CrawlSite
         $this->useStreaming = $useStreaming;
     }
 
+    public function useStreaming(): bool
+    {
+        return $this->useStreaming;
+    }
+
     public function handle(UrlGenerator $urlGenerator, Destination $destination): void
     {
         $entry = $urlGenerator->to('/');

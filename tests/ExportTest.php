@@ -1,7 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Testing\Fakes\BusFake;
 use Spatie\Export\Exporter;
+use Spatie\Export\Jobs\CrawlSite;
 
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertFileExists;
@@ -91,6 +94,11 @@ beforeEach(function () {
 });
 
 afterEach(function () {
+    if (Bus::getFacadeRoot() instanceof BusFake) {
+        // Disable file-based assertions when bus is faked
+        return;
+    }
+
     assertHomeExists();
     assertAboutExists();
     assertFeedBlogAtomExists();
@@ -100,14 +108,29 @@ afterEach(function () {
 
 it('crawls and exports routes', function () {
     app(Exporter::class)
+        ->crawl(true)
+        ->export();
+});
+
+it('crawls and exports routes while using streaming', function () {
+   app(Exporter::class)
+        ->crawl(true)
         ->useStreaming(true)
         ->export();
 });
 
-it('can disable streaming', function () {
+it('can enable streaming', function () {
+    $this->app->forgetInstance(Exporter::class);
+    Bus::fake();
+
     app(Exporter::class)
-        ->useStreaming(false)
+        ->crawl(true)
+        ->useStreaming(true)
         ->export();
+
+    Bus::assertDispatched(CrawlSite::class, function (CrawlSite $job) {
+        return $job->useStreaming() === true;
+    });
 });
 
 it('exports paths', function () {
