@@ -6,3 +6,4 @@ coverage
 .phpunit.result.cache
 .phpunit.cache/
 tests/dist/
+/.idea
