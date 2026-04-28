@@ -13,7 +13,7 @@ return [
      *
      * This option only makes sense when the `crawl` option is enabled.
      */
-    'use_streaming' => true,
+    'use_streaming' => false,
 
     /*
      * Add additional paths to be added to the export here. If you're using the

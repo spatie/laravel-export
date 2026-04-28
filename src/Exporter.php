@@ -25,7 +25,7 @@ class Exporter
     protected $crawl = false;
 
     /** @var bool */
-    protected $useStreaming = true;
+    protected $useStreaming = false;
 
     /** @var string[] */
     protected $paths = [];

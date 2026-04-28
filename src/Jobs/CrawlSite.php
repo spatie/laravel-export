@@ -15,7 +15,7 @@ class CrawlSite
     /** @var bool */
     protected $useStreaming;
 
-    public function __construct(bool $useStreaming = true)
+    public function __construct(bool $useStreaming = false)
     {
         $this->useStreaming = $useStreaming;
     }

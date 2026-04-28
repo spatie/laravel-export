@@ -99,7 +99,9 @@ afterEach(function () {
 });
 
 it('crawls and exports routes', function () {
-    app(Exporter::class)->export();
+    app(Exporter::class)
+        ->useStreaming(true)
+        ->export();
 });
 
 it('can disable streaming', function () {

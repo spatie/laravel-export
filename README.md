@@ -215,6 +215,10 @@ composer test
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
+## Upgrading
+
+Please see [UPGRADING](UPGRADING.md) for more information on how to upgrade to a new version.
+
 ## Contributing
 
 Please see [CONTRIBUTING](https://github.com/spatie/.github/blob/main/CONTRIBUTING.md) for details.
