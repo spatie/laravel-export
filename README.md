@@ -67,6 +67,14 @@ return [
 ];
 ```
 
+By default, the crawler will use streaming to reduce memory usage. This is especially useful for large sites. You can disable this with the `use_streaming` option. This option only makes sense when the `crawl` option is enabled.
+
+```php
+return [
+    'use_streaming' => true,
+];
+```
+
 #### Paths
 
 `paths` is an array of URL paths that will be exported to HTML. Use this to manually determine which pages should be exported.
@@ -116,6 +124,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(Exporter $exporter)
     {
         $exporter->crawl(false);
+        $exporter->useStreaming(true);
 
         $exporter->paths(['', 'about', 'contact', 'posts']);
         $exporter->paths(Post::all()->pluck('slug'));

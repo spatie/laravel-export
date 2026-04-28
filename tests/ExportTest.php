@@ -102,6 +102,12 @@ it('crawls and exports routes', function () {
     app(Exporter::class)->export();
 });
 
+it('can disable streaming', function () {
+    app(Exporter::class)
+        ->useStreaming(false)
+        ->export();
+});
+
 it('exports paths', function () {
     app(Exporter::class)
         ->crawl(false)

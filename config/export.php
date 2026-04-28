@@ -9,6 +9,13 @@ return [
     'crawl' => true,
 
     /*
+     * If true, the crawler will use streaming to reduce memory usage.
+     *
+     * This option only makes sense when the `crawl` option is enabled.
+     */
+    'use_streaming' => true,
+
+    /*
      * Add additional paths to be added to the export here. If you're using the
      * `crawl` option, you probably don't need to add anything here.
      *
