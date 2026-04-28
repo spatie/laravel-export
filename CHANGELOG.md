@@ -2,6 +2,20 @@
 
 All notable changes to `laravel-export` will be documented in this file
 
+## 1.4.0 - 2026-04-28
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.5.0 to 3.0.0 by @dependabot[bot] in https://github.com/spatie/laravel-export/pull/149
+* Bump dependabot/fetch-metadata from 3.0.0 to 3.1.0 by @dependabot[bot] in https://github.com/spatie/laravel-export/pull/151
+* Use spatie/crawler:^9.1 and allow streaming by @PatrickePatate in https://github.com/spatie/laravel-export/pull/152
+
+### New Contributors
+
+* @PatrickePatate made their first contribution in https://github.com/spatie/laravel-export/pull/152
+
+**Full Changelog**: https://github.com/spatie/laravel-export/compare/1.3.0...1.4.0
+
 ## 1.3.0 - 2026-03-06
 
 ### What's Changed
