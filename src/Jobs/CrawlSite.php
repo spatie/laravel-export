@@ -31,7 +31,7 @@ class CrawlSite
 
         $crawler = Crawler::create($entry, [
             RequestOptions::ALLOW_REDIRECTS => false,
-            'handler' => new LocalClient(),
+            'handler' => new LocalClient,
         ]);
 
         if ($this->useStreaming) {

@@ -19,7 +19,7 @@ class Observer extends CrawlObserver
     /** @var string */
     protected $entry;
 
-    /** @var \Spatie\Export\Destination */
+    /** @var Destination */
     protected $destination;
 
     public function __construct(string $entry, Destination $destination)

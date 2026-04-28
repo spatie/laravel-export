@@ -12,7 +12,7 @@ use Spatie\Export\Jobs\IncludeFile;
 
 class Exporter
 {
-    /** @var \Illuminate\Contracts\Bus\Dispatcher */
+    /** @var Dispatcher */
     protected $dispatcher;
 
     /** @var UrlGenerator */

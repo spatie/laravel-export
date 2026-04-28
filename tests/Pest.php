@@ -1,3 +1,5 @@
 <?php
 
-uses(Spatie\Export\Tests\TestCase::class)->in('.');
+use Spatie\Export\Tests\TestCase;
+
+uses(TestCase::class)->in('.');

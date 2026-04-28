@@ -4,6 +4,7 @@ namespace Spatie\Export\Crawler;
 
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Promise\PromiseInterface;
+use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Contracts\Http\Kernel as HttpKernel;
 use Illuminate\Http\Request;
 use Nyholm\Psr7\Factory\Psr17Factory;
@@ -12,10 +13,10 @@ use Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
 
 class LocalClient
 {
-    /** @var \Illuminate\Contracts\Http\Kernel */
+    /** @var Kernel */
     protected $kernel;
 
-    /** @var \Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory */
+    /** @var PsrHttpFactory */
     protected $psrHttpFactory;
 
     public function __construct()
