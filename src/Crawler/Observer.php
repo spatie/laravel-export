@@ -3,10 +3,12 @@
 namespace Spatie\Export\Crawler;
 
 use GuzzleHttp\Exception\RequestException;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\UriInterface;
 use RuntimeException;
 use Spatie\Crawler\CrawlObservers\CrawlObserver;
+use Spatie\Crawler\CrawlProgress;
+use Spatie\Crawler\CrawlResponse;
+use Spatie\Crawler\Enums\ResourceType;
+use Spatie\Crawler\TransferStatistics;
 use Spatie\Export\Destination;
 use Spatie\Export\Traits\NormalizedPath;
 
@@ -26,29 +28,33 @@ class Observer extends CrawlObserver
         $this->destination = $destination;
     }
 
-    public function crawled(UriInterface $url, ResponseInterface $response, ?UriInterface $foundOnUrl = null, ?string $linkText = null): void
+    public function crawled(string $url, CrawlResponse $response, CrawlProgress $progress): void
     {
-        if (! $this->isSuccesfullOrRedirect($response->getStatusCode())) {
+        if (! $response->isSuccessful() && ! $response->isRedirect()) {
+            $foundOnUrl = $response->foundOnUrl();
+
             if (! empty($foundOnUrl)) {
-                throw new RuntimeException("URL [{$url}] found on [{$foundOnUrl}] returned status code [{$response->getStatusCode()}]");
+                throw new RuntimeException("URL [{$url}] found on [{$foundOnUrl}] returned status code [{$response->status()}]");
             }
 
-            throw new RuntimeException("URL [{$url}] returned status code [{$response->getStatusCode()}]");
+            throw new RuntimeException("URL [{$url}] returned status code [{$response->status()}]");
         }
 
         $this->destination->write(
-            $this->normalizePath($url->getPath()),
-            (string) $response->getBody()
+            $this->normalizePath(parse_url($url, PHP_URL_PATH) ?? '/'),
+            $response->body()
         );
     }
 
-    public function crawlFailed(UriInterface $url, RequestException $requestException, ?UriInterface $foundOnUrl = null, ?string $linkText = null): void
-    {
+    public function crawlFailed(
+        string $url,
+        RequestException $requestException,
+        CrawlProgress $progress,
+        ?string $foundOnUrl = null,
+        ?string $linkText = null,
+        ?ResourceType $resourceType = null,
+        ?TransferStatistics $transferStats = null,
+    ): void {
         throw $requestException;
-    }
-
-    protected function isSuccesfullOrRedirect(int $statusCode): bool
-    {
-        return in_array($statusCode, [200, 301, 302]);
     }
 }

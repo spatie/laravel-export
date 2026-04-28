@@ -36,6 +36,7 @@ class ExportServiceProvider extends ServiceProvider
         $this->app->make(Exporter::class)
             ->cleanBeforeExport(config('export.clean_before_export', false))
             ->crawl(config('export.crawl', false))
+            ->useStreaming(config('export.use_streaming', false))
             ->paths(config('export.paths', []))
             ->includeFiles(config('export.include_files', []))
             ->excludeFilePatterns(config('export.exclude_file_patterns', []));

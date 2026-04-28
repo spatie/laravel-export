@@ -67,6 +67,14 @@ return [
 ];
 ```
 
+By default, streaming is disabled. Enable the `use_streaming` option to reduce memory usage when crawling large sites. This option only makes sense when the `crawl` option is enabled.
+
+```php
+return [
+    'use_streaming' => true,
+];
+```
+
 #### Paths
 
 `paths` is an array of URL paths that will be exported to HTML. Use this to manually determine which pages should be exported.
@@ -116,6 +124,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(Exporter $exporter)
     {
         $exporter->crawl(false);
+        $exporter->useStreaming(true);
 
         $exporter->paths(['', 'about', 'contact', 'posts']);
         $exporter->paths(Post::all()->pluck('slug'));
@@ -205,6 +214,10 @@ composer test
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+
+## Upgrading
+
+Please see [UPGRADING](UPGRADING.md) for more information on how to upgrade to a new version.
 
 ## Contributing
 

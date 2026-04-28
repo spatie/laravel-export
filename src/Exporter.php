@@ -24,6 +24,9 @@ class Exporter
     /** @var bool */
     protected $crawl = false;
 
+    /** @var bool */
+    protected $useStreaming = false;
+
     /** @var string[] */
     protected $paths = [];
 
@@ -49,6 +52,13 @@ class Exporter
     public function crawl(bool $crawl): self
     {
         $this->crawl = $crawl;
+
+        return $this;
+    }
+
+    public function useStreaming(bool $useStreaming): self
+    {
+        $this->useStreaming = $useStreaming;
 
         return $this;
     }
@@ -97,7 +107,7 @@ class Exporter
 
         if ($this->crawl) {
             $this->dispatcher->dispatchNow(
-                new CrawlSite
+                new CrawlSite($this->useStreaming)
             );
         }
 
