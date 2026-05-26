@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-export` will be documented in this file
 
+## 1.4.1 - 2026-05-26
+
+### What's Changed
+
+* Fix IncludeFile crash when encountering symlinks or non-file filesystem entries by @bridgeyuwa in https://github.com/spatie/laravel-export/pull/153
+
+### New Contributors
+
+* @bridgeyuwa made their first contribution in https://github.com/spatie/laravel-export/pull/153
+
+**Full Changelog**: https://github.com/spatie/laravel-export/compare/1.4.0...1.4.1
+
 ## 1.4.0 - 2026-04-28
 
 ### What's Changed
