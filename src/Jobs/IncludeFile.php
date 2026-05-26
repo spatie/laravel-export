@@ -39,8 +39,8 @@ class IncludeFile
     protected function exportIncludedFile(string $source, string $target, Destination $destination)
     {
         if (! is_file($source) || ! is_readable($source)) {
-    return;
-}
+            return;
+        }
 
         if ($this->shouldExclude($source)) {
             return;
