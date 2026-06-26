@@ -2,6 +2,19 @@
 
 All notable changes to `laravel-export` will be documented in this file
 
+## 1.5.0 - 2026-06-26
+
+### What's Changed
+
+* Bump actions/checkout from 6 to 7 by @dependabot[bot] in https://github.com/spatie/laravel-export/pull/154
+* Support Symfony 8 by @Jubeki in https://github.com/spatie/laravel-export/pull/155
+
+### New Contributors
+
+* @Jubeki made their first contribution in https://github.com/spatie/laravel-export/pull/155
+
+**Full Changelog**: https://github.com/spatie/laravel-export/compare/1.4.1...1.5.0
+
 ## 1.4.1 - 2026-05-26
 
 ### What's Changed
