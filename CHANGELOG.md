@@ -2,6 +2,22 @@
 
 All notable changes to `laravel-export` will be documented in this file
 
+## 1.6.0 - 2026-10-27
+
+Adds Guzzle 8 support while retaining Guzzle 7 compatibility. Composer selects compatible crawler and Laravel versions; Laravel 11/12 continue to use Guzzle 7, while compatible Laravel 13 applications can use Guzzle 8. No package API or configuration changes are required.
+
+### What's Changed
+
+* Bump actions/cache from 4 to 6 by @dependabot[bot] in https://github.com/spatie/laravel-export/pull/156
+* Allow Guzzle 8 by @MohannadElemary in https://github.com/spatie/laravel-export/pull/157
+* Move README ad images to spatie.be.
+
+### New Contributors
+
+* @MohannadElemary made their first contribution in https://github.com/spatie/laravel-export/pull/157
+
+**Full Changelog**: https://github.com/spatie/laravel-export/compare/1.5.0...1.6.0
+
 ## 1.5.0 - 2026-06-26
 
 ### What's Changed
